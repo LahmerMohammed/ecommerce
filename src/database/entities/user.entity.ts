@@ -85,6 +85,8 @@ export class UserEntity extends BaseEntity{
 
   @AfterLoad()
   loadWhishlistCounter(){
-    this.whishlist_counter = this.whishlist.length;
+      
+    this.whishlist_counter = this.whishlist ? this.whishlist.length : 0 ;
+
   }
 }
