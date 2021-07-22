@@ -1,5 +1,5 @@
 import { Roles } from "src/database/entities/user.entity";
-import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested } from 'class-validator';
+import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString } from 'class-validator';
 
 //make custom validator for address
 
@@ -29,15 +29,15 @@ export class CreateUserDto {
   @IsAlpha()
   lastname: string;
 
-  @IsAlphanumeric()
-  @Min(4)
+  @IsString()
+  @Length(4)
   username: string;
 
-  @IsDate()
+  @IsDateString()
   birthdate: Date;
 
   @IsString()
-  @Min(4)
+  @Length(4)
   password: string;
 
   @IsEmail()
