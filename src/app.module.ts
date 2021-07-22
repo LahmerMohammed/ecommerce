@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ProductModule } from './modules/product/product.module';
 import { UserModule } from './modules/user/user.module';
-import { AdminModule } from './modules/admin/admin.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ReviewModule } from './modules/review/review.module';
 
 
 @Module({
-  imports: [ProductModule, UserModule, AdminModule],
+  imports: [
+    ProductModule,
+    UserModule,
+    TypeOrmModule.forRoot(),
+    ReviewModule
+  ],
   controllers: [],
   providers: [],
 })
