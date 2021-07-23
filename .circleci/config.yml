@@ -3,16 +3,28 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
+  heroku: circleci/heroku@0.0.1
 
 
 jobs:
   build:
+    docker:
+      - image: cimg/node:10.19.0# the primary container, where your job's commands are run
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
+      - checkout
       - run: npm run start:prod
       - run: echo "building application ..."
   test:
+    docker:
+      - image: cimg/node:10.19.0# the primary container, where your job's commands are run
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
-      - run: echo "tests undefined"
+      - run: echo "done" 
 
 workflows:
   build_and_test:
