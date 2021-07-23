@@ -15,6 +15,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
+      - run: npm install
       - run: npm run build
       - run: npm run start:prod
       - run: echo "building application ..."
