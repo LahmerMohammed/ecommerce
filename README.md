@@ -13,8 +13,19 @@ Server =>
 # Server response
 - do database query
 - transform result
-- return the result 
+- return the result
 
+
+# Authentication
+## Workflow :
+####  -authenticating user.
+####  -Once authenticatde the server will issue JWT that will  be used on sebsequent requests.
+
+
+##  Passport Strategy : 
+####  -A set of options that are specific to that strategy.
+####  -A "verify callback" used by passport , To verify user existance and if credentials are valid.
+####  -The callback return user-object if everything u=is valid , else return null.
 
 
 <p align="center">
