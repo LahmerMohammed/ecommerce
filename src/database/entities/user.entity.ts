@@ -39,8 +39,9 @@ export class UserEntity extends BaseEntity{
     enum: Roles,
     default: Roles.USER,
     enumName: 'roles',
+    array: true,
   })
-  role: Roles;
+  role: Roles[];
 
 
   @ManyToMany(type => ProductEntity , {eager: true})
