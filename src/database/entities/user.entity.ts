@@ -4,14 +4,8 @@ import * as bcrypt from 'bcrypt';
 import { BaseEntity } from "./BaseEntity";
 import { ProductEntity } from "./product.entity";
 import { AddressEntity } from "./address.entity";
+import { Roles } from './role.enum';
 
-
-// temporary 
-export enum Roles {
-  USER="user",
-  ADMIN="admin",
-  SUPER_ADMIN="super_admin",
-}
 
 
 /**
