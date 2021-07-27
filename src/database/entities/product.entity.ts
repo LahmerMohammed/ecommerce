@@ -1,6 +1,6 @@
 
 import { BaseEntity } from "./BaseEntity";
-import { OneToMany , Column, Entity, ManyToOne } from "typeorm";
+import { OneToMany , Column, Entity, ManyToOne, JoinColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { ReviewEntity } from "./review.entity";
 
@@ -23,9 +23,10 @@ export class ProductEntity extends BaseEntity {
   reviews: ReviewEntity[];
 
 
-  @ManyToOne(type => UserEntity , user => user.added_products)
+  @ManyToOne(type => UserEntity , user => user.added_products )
+  @JoinColumn({name:'added_by_admin_id'})
   added_by_admin: UserEntity;
 
-  @Column({type: 'uuid'})
+  @Column({type: 'uuid',name:'added_by_admin_id'})
   added_by_admin_id: string;
 }

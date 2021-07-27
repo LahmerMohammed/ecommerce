@@ -28,6 +28,16 @@ Server =>
 ####  -The callback return user-object if everything u=is valid , else return null.
 
 
+## Implementation : 
+#### -AuthService ( function validateUser ) has the job of retrieving a user and verifying the password.
+### Implementing passport-local-strategy : 
+#### 
+
+
+### -The only significant difference in the `validate()` method for each strategy is how you determine if a user exists and is valid.
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>

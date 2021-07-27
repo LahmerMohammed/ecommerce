@@ -3,6 +3,7 @@ import { ProductModule } from './modules/product/product.module';
 import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReviewModule } from './modules/review/review.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
@@ -10,7 +11,8 @@ import { ReviewModule } from './modules/review/review.module';
     ProductModule,
     UserModule,
     TypeOrmModule.forRoot(),
-    ReviewModule
+    ReviewModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

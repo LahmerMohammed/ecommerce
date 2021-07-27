@@ -24,6 +24,7 @@
     "typeorm:migration:run": "npm run typeorm -- migration:run"
   },
   "dependencies": {
+    "@adminjs/nestjs": "^2.0.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^1.0.0",
     "@nestjs/core": "^7.6.15",
@@ -36,6 +37,7 @@
     "@nestjsx/crud": "^5.0.0-alpha.3",
     "@nestjsx/crud-typeorm": "^5.0.0-alpha.3",
     "@types/passport": "^1.0.7",
+    "adminjs": "^5.1.0",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
@@ -59,7 +61,7 @@
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.36",
     "@types/passport-jwt": "^3.0.6",
-    "@types/passport-local": "^1.0.33",
+    "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",

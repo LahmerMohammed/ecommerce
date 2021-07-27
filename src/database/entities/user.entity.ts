@@ -65,18 +65,22 @@ export class UserEntity extends BaseEntity{
 
 
   @OneToOne(type => AddressEntity , {
-    nullable: false, eager: true,
+    nullable: true,
+    eager: true,
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
     cascade: true
   })
-  @JoinColumn()
+  @JoinColumn({name: 'address_id'})
   address: AddressEntity;
 
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password,10);
   } 
+
+
+  
 
   /*Hmmm*/
   @OneToMany(type => ReviewEntity , review => review.user, {eager: false})
