@@ -1,3 +1,10 @@
+# Functionalities ( not implmented yet ! ) :
+- implement dtos
+- implement serializers
+- implement authorization
+- implement tests
+
+
 
 
 # Client requesting 
