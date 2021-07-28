@@ -1,3 +1,5 @@
+import { RemoveProductWhishlist } from './dtos/remove-product-whishlist';
+import { AddProductWhishlist } from './dtos/add-product-whsilst.dto';
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -27,4 +29,17 @@ import { Crud, CrudController } from "@nestjsx/crud";
 export class UserController implements CrudController<UserEntity> {
   constructor(public service: UserService) {
   }
+
+
+
+  @Post('/whishlist/add')
+  async addProductWhishlist(@Body() addProductWhishlist: AddProductWhishlist){
+    return this.service.addProductWhishlist(addProductWhishlist);
+  }
+
+  @Delete('/whishlist/remove')
+  async removeProductWhishlist(@Body() removeProductWhishlist: RemoveProductWhishlist) {
+    return this.service.removeProductWhishlist(removeProductWhishlist);
+  }
+
 }

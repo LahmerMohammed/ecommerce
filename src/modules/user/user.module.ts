@@ -4,9 +4,10 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { AddressEntity } from 'src/database/entities/address.entity';
+import { ProductModule } from '../product/product.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity,AddressEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity,AddressEntity]),ProductModule],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService]
