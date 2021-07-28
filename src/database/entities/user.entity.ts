@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { BaseEntity } from "./BaseEntity";
 import { ProductEntity } from "./product.entity";
 import { AddressEntity } from "./address.entity";
-import { Roles } from './role.enum';
+import { Role } from './role.enum';
 
 
 
@@ -36,12 +36,12 @@ export class UserEntity extends BaseEntity{
 
   @Column({
     type: 'enum',
-    enum: Roles,
-    default: Roles.USER,
+    enum: Role,
+    default: Role.USER,
     enumName: 'roles',
     array: true,
   })
-  role: Roles[];
+  role: Role[];
 
 
   @ManyToMany(type => ProductEntity , {eager: true})

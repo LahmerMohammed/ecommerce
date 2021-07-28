@@ -1,4 +1,4 @@
-import { Roles } from "src/database/entities/role.enum";
+import { Role } from "src/database/entities/role.enum";
 import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString } from 'class-validator';
 
 //make custom validator for address
@@ -43,8 +43,8 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @IsEnum(Roles)
-  role: Roles;
+  @IsEnum(Role)
+  role: Role;
 
   @ValidateNested()
   address? : AddressDto;

@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class ChangeToRolesArray1627415069878 implements MigrationInterface {
-    name = 'ChangeToRolesArray1627415069878'
+export class ChangeToRoleArray1627415069878 implements MigrationInterface {
+    name = 'ChangeToRoleArray1627415069878'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "user" DROP COLUMN "role"`);
