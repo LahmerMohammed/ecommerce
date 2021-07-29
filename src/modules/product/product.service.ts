@@ -27,6 +27,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     }
 
     product.added_by_admin = admin;
+    product.updated_by_admin = admin;
 
     await this.productRepo.save(product);
 
@@ -45,7 +46,11 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
       throw new UnauthorizedException('invalid admin');
     }
 
-    products.forEach(product => product.added_by_admin = admin);
+    products.forEach(product => {
+      product.added_by_admin = admin;
+      product.updated_by_admin = admin;
+
+    });
 
     await this.productRepo.save(products);
 
