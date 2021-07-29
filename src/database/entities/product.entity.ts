@@ -31,6 +31,7 @@ export class ProductEntity extends BaseEntity {
   added_by_admin_id: string;
 
 
+  
   @ManyToOne(type => UserEntity , user => user.added_products )
   @JoinColumn({name:'updated_by_admin_id'})
   updated_by_admin: UserEntity;
