@@ -49,7 +49,6 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     products.forEach(product => {
       product.added_by_admin = admin;
       product.updated_by_admin = admin;
-
     });
 
     await this.productRepo.save(products);
