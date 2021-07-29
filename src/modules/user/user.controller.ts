@@ -6,8 +6,9 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { Crud, CrudController } from "@nestjsx/crud";
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('user')
 @Crud({
   model: {
     type: UserEntity,
@@ -20,8 +21,14 @@ import { Crud, CrudController } from "@nestjsx/crud";
     join: {
       address : {
         eager: true,
-        exclude: ["id"]
       }
+    }
+  },
+  params: {
+    id: {
+      field: 'id',
+      type: 'uuid',
+      primary: true
     }
   }
 })

@@ -1,5 +1,5 @@
 import { ProductService } from './../product/product.service';
-import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { forwardRef, Inject, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AddProductWhishlist } from './dtos/add-product-whsilst.dto';
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/database/entities/user.entity';
@@ -13,7 +13,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
   constructor(
     @InjectRepository(UserEntity) private readonly userRepo: Repository<UserEntity>,
-    private readonly productService: ProductService,
+    @Inject(forwardRef(() => ProductService)) private readonly productService: ProductService,
     ) {
     super(userRepo);
   }
