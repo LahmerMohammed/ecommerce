@@ -1,12 +1,12 @@
 import { ProductService } from './../product/product.service';
 import { forwardRef, Inject, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { AddProductWhishlist } from './dtos/add-product-whsilst.dto';
+import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RemoveProductWhishlist } from './dtos/remove-product-whishlist';
+import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {

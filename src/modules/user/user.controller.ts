@@ -1,5 +1,5 @@
-import { RemoveProductWhishlist } from './dtos/remove-product-whishlist';
-import { AddProductWhishlist } from './dtos/add-product-whsilst.dto';
+import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
+import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
