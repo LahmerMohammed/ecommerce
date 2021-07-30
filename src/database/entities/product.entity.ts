@@ -24,18 +24,10 @@ export class ProductEntity extends BaseEntity {
 
 
   @ManyToOne(type => UserEntity , user => user.added_products )
-  @JoinColumn({name:'added_by_admin_id'})
-  added_by_admin: UserEntity;
+  @JoinColumn({name:'added_by_id'})
+  added_by: UserEntity;
 
-  @Column({type: 'uuid',name:'added_by_admin_id'})
-  added_by_admin_id: string;
-
-
-  
-  @ManyToOne(type => UserEntity , user => user.added_products )
-  @JoinColumn({name:'updated_by_admin_id'})
-  updated_by_admin: UserEntity;
-
-  @Column({type: 'uuid',name:'updated_by_admin_id'})
-  updated_by_admin_id: string;
+  @Column({type: 'uuid',name:'added_by_id'})
+  added_by_id: string;
+ 
 }

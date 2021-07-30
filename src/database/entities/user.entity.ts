@@ -50,7 +50,7 @@ export class UserEntity extends BaseEntity{
   whishlist_counter: number;
 
 
-  @OneToMany(type => ProductEntity , product => product.added_by_admin , 
+  @OneToMany(type => ProductEntity , product => product.added_by , 
   {
     eager: false,
     nullable:true,

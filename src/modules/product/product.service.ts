@@ -20,14 +20,13 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     var product = plainToClass(ProductEntity,createProductDto);
 
 
-    const admin = await this.userService.findOne({id: createProductDto.added_by_admin_id});
+    const user = await this.userService.findOne({id: createProductDto.added_by_admin_id});
 
-    if( !admin ){
+    if( !user ){
       throw new UnauthorizedException('invalid admin');
     }
 
-    product.added_by_admin = admin;
-    product.updated_by_admin = admin;
+    product.added_by = user;
 
     await this.productRepo.save(product);
 
@@ -40,15 +39,14 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     var products = plainToClass(ProductEntity,createProductsDto);
 
 
-    const admin = await this.userService.findOne({id: createProductsDto[0]!.added_by_admin_id});
+    const user = await this.userService.findOne({id: createProductsDto[0]!.added_by_admin_id});
 
-    if( !admin ){
+    if( !user ){
       throw new UnauthorizedException('invalid admin');
     }
 
     products.forEach(product => {
-      product.added_by_admin = admin;
-      product.updated_by_admin = admin;
+      product.added_by = user;
     });
 
     await this.productRepo.save(products);
