@@ -13,5 +13,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto){
   email: string;
 
   @Exclude()
+  phone_number: string;
+
+  @Exclude()
   password:string;
 }

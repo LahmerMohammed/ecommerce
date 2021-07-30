@@ -20,6 +20,9 @@ export class UserEntity extends BaseEntity{
   @Column()
   lastname: string;
 
+  @Column({nullable: true , name: 'phone_number'})
+  phone_number: string;
+
   @Column({unique:true})
   username: string;
 
@@ -74,11 +77,9 @@ export class UserEntity extends BaseEntity{
   } 
 
 
-  
-
-  /*Hmmm*/
   @OneToMany(type => ReviewEntity , review => review.user, {eager: false})
   reviews: ReviewEntity[];
+
 
 
   @AfterLoad()

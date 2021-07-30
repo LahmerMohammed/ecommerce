@@ -1,6 +1,6 @@
 import { BaseDto } from './../../../database/entities/base.dto';
 import { Role } from "src/database/entities/role.enum";
-import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString, IsArray } from 'class-validator';
+import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString, IsArray, isPhoneNumber, IsPhoneNumber } from 'class-validator';
 import { Exclude, Expose } from "class-transformer";
 
 //make custom validator for address
@@ -13,6 +13,9 @@ class AddressDto {
 
   @IsString()
   street: string;
+
+  @IsPhoneNumber()
+  phone_number: string;
 
   @IsISO31661Alpha2()
   country: string;
