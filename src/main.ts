@@ -8,15 +8,14 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   
+
   const config = new DocumentBuilder()
     .setTitle('E-commerce')
     .setDescription('API description')
     .setVersion('1.0')
     .addTag('e-commerce')
     .build();
-  
     const document = SwaggerModule.createDocument(app, config);
-
     SwaggerModule.setup('docs',app,document);
 
   

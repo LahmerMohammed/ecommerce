@@ -1,11 +1,11 @@
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserEntity } from 'src/database/entities/user.entity';
-import { Crud, CrudController } from "@nestjsx/crud";
+import { Crud, CrudController, CrudRequest, Override, ParsedRequest } from "@nestjsx/crud";
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user')
@@ -16,6 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
   dto: {
     create: CreateUserDto,
     update: UpdateUserDto,
+    replace: UpdateUserDto,
   },
   query: {
     join: {
@@ -30,13 +31,21 @@ import { ApiTags } from '@nestjs/swagger';
       type: 'uuid',
       primary: true
     }
+  },
+  routes: {
+    exclude:["updateOneBase"]
   }
 })
 @Controller('users')
 export class UserController implements CrudController<UserEntity> {
   constructor(public service: UserService) {
   }
+ 
 
+  @Put('/:id')
+  async updateUser(@Param("id") user_id: string , @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
+    console.log(updateUserDto);
+  }
 
 
   @Post('/whishlist/add')

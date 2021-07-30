@@ -1,3 +1,5 @@
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { CrudRequest } from '@nestjsx/crud';
 import { ProductService } from './../product/product.service';
 import { forwardRef, Inject, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
@@ -7,6 +9,7 @@ import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
+import { Override } from '@nestjsx/crud';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
@@ -72,5 +75,6 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
  
    }
     
+  
   
 }

@@ -1,5 +1,6 @@
 import { Role } from "src/database/entities/role.enum";
 import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString, IsArray } from 'class-validator';
+import { Exclude } from "class-transformer";
 
 //make custom validator for address
 
@@ -22,6 +23,17 @@ class AddressDto {
 }
 
 export class CreateUserDto {
+
+  @Exclude()
+  id: string;
+
+  @Exclude()
+  updated_at: Date;
+
+
+  @Exclude()
+  created_at: Date;
+
 
   @IsAlpha()
   firstname: string;

@@ -1,9 +1,12 @@
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { AuthService } from './auth.service';
 import { Controller, Post, Request, UseGuards, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './guards/local.guard';
 
+
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
