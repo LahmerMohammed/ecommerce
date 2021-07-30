@@ -1,30 +1,36 @@
-import { Expose } from "class-transformer";
+import { BaseDto } from './../../../database/entities/base.dto';
+import { UserEntity } from 'src/database/entities/user.entity';
+import { ReviewEntity } from './../../../database/entities/review.entity';
+import { Exclude, Expose } from "class-transformer";
 import { IsInt, isNotEmptyObject, IsPositive, IsString, IsUUID } from "class-validator";
 import { IsNull } from "typeorm";
 
 
-
-export class CreateProductDto {
+@Expose()
+export class CreateProductDto extends BaseDto {
   
-  @Expose()
   @IsString()
   name: string;
 
-  @Expose()
   @IsString()
   description: string;
 
-  @Expose()
+  
   @IsInt()
   @IsPositive()
   price: number;
 
-  @Expose()
   @IsInt()
   @IsPositive()
   quantity: number;
 
-  @Expose()
   @IsUUID()
   added_by_admin_id: string;
+
+
+  @Exclude()
+  reviews: ReviewEntity[];
+
+  @Exclude()
+  added_by: UserEntity;
 }

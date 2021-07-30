@@ -1,10 +1,15 @@
+import { BaseDto } from './../../../database/entities/base.dto';
 import { Role } from "src/database/entities/role.enum";
 import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString, IsArray } from 'class-validator';
-import { Exclude } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 
 //make custom validator for address
 
+@Expose()
 class AddressDto {
+
+  @Exclude()
+  id: string;
 
   @IsString()
   street: string;
@@ -22,7 +27,8 @@ class AddressDto {
   zipcode: string;
 }
 
-export class CreateUserDto {
+@Expose()
+export class CreateUserDto  extends BaseDto{
 
   @Exclude()
   id: string;
