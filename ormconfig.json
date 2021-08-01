@@ -1,16 +1,16 @@
 {
   "type": "postgres",
-  "host": "localhost",
+  "host": "ec2-54-74-60-70.eu-west-1.compute.amazonaws.com",
   "port": 5432,
-  "username": "postgres",
-  "password": "root",
-  "database": "practise",
+  "username": "dkwmzyrjcqxvnr",
+  "password": "7cf70935c1ff98ce269c7df520b3d9d363a5337188445e7cee7bb5f5d19636dc",
+  "database": "dcen63qve109u5",
   "entities": ["dist/**/**.entity{.ts,.js}"],
   "autoSchemaSync": false,
   "migrations": ["dist/database/migration/*{.js,.ts}"],
   "cli": {
-        "migrationsDir": "src/database/migration"
-    },
+    "migrationsDir": "src/database/migration"
+  },
   "migrationsTableName": "migrations",
   "logging": true
 }
