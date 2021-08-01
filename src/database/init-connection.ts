@@ -12,9 +12,6 @@ const baseOptions: ConnectionOptions = {
   migrationsTableName: "migrations",
   logging: true,
   synchronize: false,
-  extra: {
-    ssl: true,
-  },
   ssl: { rejectUnauthorized: false },
 };
 
