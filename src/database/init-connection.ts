@@ -12,6 +12,9 @@ const baseOptions: ConnectionOptions = {
   migrationsTableName: "migrations",
   logging: true,
   synchronize: false,
+  extra: {
+    ssl: true,
+  },
 };
 
 const dev = {
@@ -19,9 +22,6 @@ const dev = {
   password: "root",
   database: "practise",
   host: "localhost",
-  extra: {
-    ssl: true,
-  },
 };
 
 export function getOptions() {
