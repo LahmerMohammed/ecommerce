@@ -15,6 +15,7 @@ const baseOptions: ConnectionOptions = {
   extra: {
     ssl: true,
   },
+  ssl: { rejectUnauthorized: false },
 };
 
 const dev = {
