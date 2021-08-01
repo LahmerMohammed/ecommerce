@@ -19,6 +19,7 @@ const dev = {
   password: "root",
   database: "practise",
   host: "localhost",
+  ssl: true,
 };
 
 export function getOptions() {
