@@ -32,5 +32,7 @@ export function getOptions() {
     Object.assign(connectionOptions, dev);
   }
 
+  console.log(connectionOptions);
+
   return connectionOptions;
 }
