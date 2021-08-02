@@ -4,13 +4,13 @@ import { UserModule } from "./modules/user/user.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ReviewModule } from "./modules/review/review.module";
 import { AuthModule } from "./modules/auth/auth.module";
-import { getOptions } from "./database/init-connection";
+import typeOrmConfig from "./database/config";
 
 @Module({
   imports: [
     ProductModule,
     UserModule,
-    TypeOrmModule.forRoot(getOptions()),
+    TypeOrmModule.forRoot(typeOrmConfig),
     ReviewModule,
     AuthModule,
   ],

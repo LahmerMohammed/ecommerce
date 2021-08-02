@@ -22,7 +22,7 @@ const dev = {
   host: "localhost",
 };
 
-export function getOptions() {
+function getOptions() {
   let connectionOptions: ConnectionOptions;
 
   connectionOptions = baseOptions;
@@ -37,3 +37,5 @@ export function getOptions() {
 
   return connectionOptions;
 }
+
+export = getOptions();
