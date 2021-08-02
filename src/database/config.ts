@@ -4,8 +4,8 @@ import { ConnectionOptions, createConnection } from "typeorm";
 const baseOptions: ConnectionOptions = {
   type: "postgres",
   port: 5432,
-  entities: ["dist/**/**.entity{.ts,.js}"],
-  migrations: ["dist/database/migration/*{.js,.ts}"],
+  entities: ["dist/**/**.entity.js"],
+  migrations: ["dist/database/migration/*.js"],
   cli: {
     migrationsDir: "src/database/migration",
   },
