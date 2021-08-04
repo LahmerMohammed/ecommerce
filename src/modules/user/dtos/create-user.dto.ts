@@ -43,19 +43,9 @@ export class CreateUserDto  extends BaseDto{
   @Exclude()
   created_at: Date;
 
-
-  @IsAlpha()
-  firstname: string;
-
-  @IsAlpha()
-  lastname: string;
-
   @IsString()
   @Length(4)
   username: string;
-
-  @IsDateString()
-  birthdate: Date;
 
   @IsString()
   @Length(4)

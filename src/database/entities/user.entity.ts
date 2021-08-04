@@ -15,22 +15,8 @@ import { Role } from './role.enum';
 export class UserEntity extends BaseEntity{
 
   @Column()
-  firstname: string;
-
-  @Column()
-  lastname: string;
-
-  @Column({nullable: true , name: 'phone_number'})
-  phone_number: string;
-
-  @Column({unique:true})
   username: string;
-
-  @Column({
-    type: 'date',
-  })
-  birthdate: Date;
-
+  
   @Column()
   password: string;
 
