@@ -26,10 +26,11 @@ export class UserEntity extends BaseEntity{
   @Column({
     type: 'enum',
     enum: Role,
-    default: Role.USER,
-    enumName: 'role',
+    array:true,
+    default: [Role.USER],
+    name:'role',
   })
-  role: Role;
+  roles: Role[];
 
 
   @ManyToMany(type => ProductEntity , {eager: true})
