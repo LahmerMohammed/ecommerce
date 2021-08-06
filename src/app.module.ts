@@ -5,7 +5,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ReviewModule } from "./modules/review/review.module";
 import { AuthModule } from "./modules/auth/auth.module";
 
-import typeOrmConfig = require("./database/config");
+import typeOrmConfig = require("./config/database.config");
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import typeOrmConfig = require("./database/config");
     TypeOrmModule.forRoot(typeOrmConfig),
     ReviewModule,
     AuthModule,
+    ConfigModule.forRoot()
   ],
   controllers: [],
   providers: [],
