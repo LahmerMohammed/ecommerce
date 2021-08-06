@@ -5,8 +5,7 @@
 ### Linux ###
 *~
 
-ormconfig.json
-
+.env
 # vscode
 .vscode
 
