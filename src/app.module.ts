@@ -15,7 +15,6 @@ import { ConfigModule } from '@nestjs/config'
     TypeOrmModule.forRoot(typeOrmConfig),
     ReviewModule,
     AuthModule,
-    ConfigModule.forRoot()
   ],
   controllers: [],
   providers: [],

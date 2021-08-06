@@ -1,6 +1,8 @@
 import "reflect-metadata";
 import { ConnectionOptions, createConnection } from "typeorm";
 
+require('dotenv').config({path: '.env/dev.env'})
+
 const baseOptions: ConnectionOptions = {
   type: "postgres",
   port: 5432,
