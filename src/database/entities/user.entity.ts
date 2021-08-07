@@ -33,6 +33,9 @@ export class UserEntity extends BaseEntity{
   roles: Role[];
 
 
+  @Column({name: 'is_email_confirmed',default:false})
+  isEmailConfirmed: boolean;
+
   @ManyToMany(type => ProductEntity , {eager: true})
   @JoinTable()
   whishlist: ProductEntity[];
