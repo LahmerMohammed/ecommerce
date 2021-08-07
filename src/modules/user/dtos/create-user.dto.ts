@@ -54,8 +54,8 @@ export class CreateUserDto  extends BaseDto{
   @IsEmail()
   email: string;
 
-  @IsEnum(Role)
-  role: Role;
+  @IsEnum(Role,{each:true})
+  roles: Role[];
 
   @ValidateNested()
   address? : AddressDto;

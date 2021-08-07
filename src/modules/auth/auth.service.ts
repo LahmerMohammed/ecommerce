@@ -1,3 +1,4 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { UserService } from './../user/user.service';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; 
@@ -8,7 +9,8 @@ export class AuthService {
   
 
   constructor(private userService : UserService,
-              private jwtService: JwtService){}
+              private jwtService: JwtService,
+              private readonly mailService: MailerService){}
 
   async validateUser(username: string , password: string) : Promise<any> {
     const user = await this.userService.findOne({

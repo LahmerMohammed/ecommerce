@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 import { Override } from '@nestjsx/crud';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
@@ -17,7 +18,8 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   constructor(
     @InjectRepository(UserEntity) private readonly userRepo: Repository<UserEntity>,
     @Inject(forwardRef(() => ProductService)) private readonly productService: ProductService,
-    ) {
+    
+    private readonly mailService: MailerService) {
     super(userRepo);
   }
   async addProductWhishlist(addToWhishlist: AddProductWhishlist) : Promise<UserEntity> {
