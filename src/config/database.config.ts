@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { ConnectionOptions, createConnection } from "typeorm";
 
-require('dotenv').config({path: '.env/dev.env'})
 
 const baseOptions: ConnectionOptions = {
   type: "postgres",
@@ -17,12 +16,6 @@ const baseOptions: ConnectionOptions = {
   ssl: { rejectUnauthorized: false },
 };
 
-const dev = {
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  host: process.env.DB_HOST,
-};
 
 function getOptions() {
   let connectionOptions: ConnectionOptions;
@@ -32,6 +25,15 @@ function getOptions() {
   if (process.env.DATABASE_URL) {
     Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
   } else {
+    require('dotenv').config({path: '.env/dev.env'})
+    
+    const dev = {
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      host: process.env.DB_HOST,
+    };
+    
     Object.assign(connectionOptions, dev);
   }
 
