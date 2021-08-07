@@ -76,6 +76,11 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     return user;
  
    }
+
+
+   async setEmailConfirmed(email: string) {
+     const user = await this.userRepo.update({email: email} , {isEmailConfirmed: true});
+   }
     
   
   
