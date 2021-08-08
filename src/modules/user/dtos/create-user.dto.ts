@@ -39,6 +39,9 @@ export class CreateUserDto  extends BaseDto{
   @Exclude()
   updated_at: Date;
 
+  @Exclude()
+  isEmailConfirmed: boolean;
+
 
   @Exclude()
   created_at: Date;

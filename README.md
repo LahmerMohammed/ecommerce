@@ -6,6 +6,13 @@
 
 
 
+# Email confirmation :
+- user register 
+- send jwt token to email
+- recive jwt token
+- if valid set email  confirmed
+- add emailConfirmation Guard
+
 
 # Client requesting 
 Client => 

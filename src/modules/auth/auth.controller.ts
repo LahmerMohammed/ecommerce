@@ -1,8 +1,10 @@
+import { EmailConfirmedGuard } from './../../guards/email-confirmed.guard';
+import { CreateUserDto } from './../user/dtos/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { AuthService } from './auth.service';
-import { Controller, Post, Request, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Request, UseGuards, Get, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './guards/local.guard';
 
@@ -14,35 +16,18 @@ export class AuthController {
   constructor(private authService : AuthService,
     private readonly mailService:MailerService) {}
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard,EmailConfirmedGuard)
   @Post('/login')
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('/profile')
-  async profile(@Request() req){
-    return req.user;
-  }
 
-  @Get('/sendmail')
-  async sendmail(){
-    this
-    .mailService
-    .sendMail({
-      to: ['lahmermohammed65@gmail.com'], // list of receivers
-      from: 'moha.topper@gmail.com', // sender address
-      subject: 'Testing Nest MailerModule ✔', // Subject line
-      text: 'welcome', // plaintext body
-      html: '<b>welcome</b>', // HTML body content
-    })
-    .then((success) => {
-      console.log(success)
-    })
-    .catch((err) => {
-      console.log(err)
-    });
-  } 
+  @Post('/register')
+  async register(@Body() createUserDto: CreateUserDto){
+    return await this.authService.register(createUserDto);
+  }
+  
+  
 
 }

@@ -1,3 +1,4 @@
+import { MailModule } from './../mail/mail.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserModule } from './../user/user.module';
 import { Module } from '@nestjs/common';
@@ -7,12 +8,15 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 
+require('dotenv').config('.env/dev.env')
+
+
 @Module({
-  imports:[UserModule,PassportModule,
+  imports:[UserModule,PassportModule,MailModule,
         JwtModule.register({
-          secret: 'secret',
+          secret: process.env.JWT_SECRET,
           signOptions:{
-            expiresIn: '60m'
+            expiresIn: process.env.JWT_EXPIRES_IN
           }
         })],
   providers: [AuthService,LocalStrategy,JwtStrategy],
