@@ -42,6 +42,9 @@ export class CreateUserDto  extends BaseDto{
   @Exclude()
   isEmailConfirmed: boolean;
 
+  @Exclude()
+  roles: Role[];
+
 
   @Exclude()
   created_at: Date;
@@ -56,9 +59,6 @@ export class CreateUserDto  extends BaseDto{
 
   @IsEmail()
   email: string;
-
-  @IsEnum(Role,{each:true})
-  roles: Role[];
 
   @ValidateNested()
   address? : AddressDto;
