@@ -1,3 +1,4 @@
+import { UserSerializer } from './serializers/users.serializer';
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe } from '@nestjs/common';
@@ -17,6 +18,10 @@ import { ApiTags } from '@nestjs/swagger';
     create: CreateUserDto,
     update: UpdateUserDto,
     replace: UpdateUserDto,
+  },
+  serialize: {
+    get: UserSerializer,
+    getMany: UserSerializer,
   },
   query: {
     join: {
