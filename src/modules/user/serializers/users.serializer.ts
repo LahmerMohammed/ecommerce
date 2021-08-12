@@ -14,6 +14,7 @@ export class UserSerializer {
   email: string;
   whishlist_counter: number;
   address: AddressEntity;
+  roles: Role[];
 
   @Exclude()
   created_at: Date;
@@ -21,8 +22,6 @@ export class UserSerializer {
   @Exclude()
   updated_at: Date;
 
-  @Exclude()
-  roles: Role[];
 
   @Exclude()
   isEmailConfirmed: boolean;
