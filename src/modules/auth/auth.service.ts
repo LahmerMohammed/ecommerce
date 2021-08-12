@@ -1,3 +1,5 @@
+import { UserSerializer } from './../user/serializers/users.serializer';
+import { plainToClass } from 'class-transformer';
 import { UserEntity } from './../../database/entities/user.entity';
 import { CreateUserDto } from './../user/dtos/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -30,12 +32,12 @@ export class AuthService {
   }
 
 
-  async login(user : any) {
+  async login(user : UserEntity) {
     const payload = {username: user.username , sub:  user.id};
   
     return {
       access_token: this.jwtService.sign(payload),
-      user: user,
+      user: plainToClass(UserSerializer,user),
     }
   }
 
