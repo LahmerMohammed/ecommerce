@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Role } from "src/database/entities/role.enum";
 import { ROLES_KEY } from "src/decorators/role.decorator";
@@ -22,7 +22,7 @@ export class RolesGuard implements CanActivate {
     
     const isOwner = await this.productService.isOwner(body.user_id,body.product_id);
 
-    return requiredRoles.some(role => user.roles.includes(role) ) 
+    return requiredRoles.some(role => user.roles.includes(role)) || isOwner; 
 
   }
 }
