@@ -1,8 +1,9 @@
+import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import { RolesGuard } from './../../guards/role.guard';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { Crud, CrudController } from '@nestjsx/crud';
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { ApiTags } from '@nestjs/swagger';
@@ -11,6 +12,7 @@ import { Role } from 'src/database/entities/role.enum';
 
 
 @ApiTags('products')
+@UseGuards(JwtAuthGuard)
 @Crud({
   model: {
     type: ProductEntity,
@@ -21,7 +23,7 @@ import { Role } from 'src/database/entities/role.enum';
   },
   routes: {
     updateOneBase: {
-      decorators: [],
+      decorators: []
     },
     deleteOneBase: {
       decorators: []

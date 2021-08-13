@@ -6,10 +6,11 @@ import { ProductEntity } from 'src/database/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
 import { plainToClass } from 'class-transformer';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductService extends TypeOrmCrudService<ProductEntity> {
-  constructor(@InjectRepository(ProductEntity) private readonly productRepo,
+  constructor(@InjectRepository(ProductEntity) private readonly productRepo : Repository<ProductEntity>,
   @Inject(forwardRef(() => UserService )) private readonly userService: UserService){
     super(productRepo);
   }
@@ -51,5 +52,12 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
 
     await this.productRepo.save(products);
 
+  }
+
+  async isOwner(product_id: string , user_id: string) : Promise<boolean>{
+    
+    const product = await this.productRepo.findOne({id: product_id});
+  
+    return product.added_by_id == user_id
   }
 }
