@@ -25,7 +25,7 @@ export class MailService {
 
     const token = this.jwtService.sign(payload);
 
-    const url = `${process.env.EMAIL_CONF_URL}?${token}`;
+    const url = `${process.env.EMAIL_CONF_URL}/${token}`;
 
     const text = `Welcome to my application. To confirm your email address click here ${url}`;
 
