@@ -39,7 +39,8 @@ import { ApiTags } from '@nestjs/swagger';
   },
   routes: {
     exclude:["updateOneBase"]
-  }
+  },
+  
 })
 @Controller('users')
 export class UserController implements CrudController<UserEntity> {
