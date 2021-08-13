@@ -13,19 +13,24 @@ import { LocalAuthGuard } from './guards/local.guard';
 @Controller('auth')
 export class AuthController {
 
-  constructor(private authService : AuthService,
-    private readonly mailService:MailerService) {}
+  constructor(private authService : AuthService,) {}
 
   @UseGuards(LocalAuthGuard,EmailConfirmedGuard)
   @Post('/login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    return await this.authService.login(req.user);
   }
 
 
   @Post('/register')
   async register(@Body() createUserDto: CreateUserDto){
     return await this.authService.register(createUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/me')
+  async profile(@Request() req) {
+    return req.user;
   }
   
   

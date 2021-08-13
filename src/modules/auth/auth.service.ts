@@ -1,3 +1,4 @@
+import { JwtPayload } from './interfaces/payload.interface';
 import { UserSerializer } from './../user/serializers/users.serializer';
 import { plainToClass } from 'class-transformer';
 import { UserEntity } from './../../database/entities/user.entity';
@@ -19,12 +20,14 @@ export class AuthService {
               private readonly userService: UserService){}
 
   async validateUser(username: string , password: string) : Promise<any> {
+
     const user = await this.userService.findOne({
     username: username
     });
   
+    
     // TODO : exclude some fields
-    if( user && bcrypt.compare(password , user.password)){
+    if( user && ( await bcrypt.compare(password , user.password)) ){
       return user;
     }
 
@@ -33,7 +36,7 @@ export class AuthService {
 
 
   async login(user : UserEntity) {
-    const payload = {username: user.username , sub:  user.id};
+    const payload : JwtPayload = {username: user.username , sub:  user.id};
   
     return {
       access_token: this.jwtService.sign(payload),
