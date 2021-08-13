@@ -38,7 +38,7 @@ import { ApiTags } from '@nestjs/swagger';
     }
   },
   routes: {
-    exclude:["updateOneBase"]
+    exclude:["updateOneBase"],
   },
   
 })

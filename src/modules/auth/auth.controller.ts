@@ -27,12 +27,4 @@ export class AuthController {
     return await this.authService.register(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post('/me')
-  async profile(@Request() req) {
-    return req.user;
-  }
-  
-  
-
 }
