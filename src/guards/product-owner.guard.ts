@@ -1,3 +1,4 @@
+import { UpdateProductDto } from './../modules/product/dtos/update-product.dto';
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Role } from "src/database/entities/role.enum";
@@ -18,9 +19,9 @@ export class RolesGuard implements CanActivate {
     
 
     const { user } = context.switchToHttp().getRequest();
-    const { body } = context.switchToHttp().getRequest();
+    const  body : UpdateProductDto = context.switchToHttp().getRequest().body;
     
-    const isOwner = await this.productService.isOwner(body.user_id,body.product_id);
+    const isOwner = await this.productService.isOwner(user.id,body.id);
 
     return requiredRoles.some(role => user.roles.includes(role)) || isOwner; 
 
