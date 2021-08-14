@@ -1,3 +1,4 @@
+import { Category } from './category.enum';
 
 import { BaseEntity } from "./BaseEntity";
 import { OneToMany , Column, Entity, ManyToOne, JoinColumn } from "typeorm";
@@ -30,4 +31,11 @@ export class ProductEntity extends BaseEntity {
   @Column({type: 'uuid',name:'added_by_id'})
   added_by_id: string;
  
+  @Column({
+    type: 'enum',
+    enum: Category,
+    name: 'category'
+  })
+  category: Category;
+
 }

@@ -1,13 +1,17 @@
+import { JwtAuthGuard } from './../auth/guards/jwt.guard';
+import { RolesGuard } from './../../guards/product-owner.guard';
 import { UserSerializer } from './serializers/users.serializer';
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { Crud, CrudController, CrudRequest, Override, ParsedRequest } from "@nestjsx/crud";
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiHeader, ApiParam, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/decorators/role.decorator';
+import { Role } from 'src/database/entities/role.enum';
 
 @ApiTags('user')
 @Crud({
@@ -42,7 +46,10 @@ import { ApiTags } from '@nestjs/swagger';
   },
   
 })
+@Roles(Role.ADMIN)
+@UseGuards(JwtAuthGuard,RolesGuard)
 @Controller('users')
+@ApiBearerAuth('JWT')
 export class UserController implements CrudController<UserEntity> {
   constructor(public service: UserService) {
   }

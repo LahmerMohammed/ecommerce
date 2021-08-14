@@ -1,8 +1,9 @@
+import { Category } from './../../../database/entities/category.enum';
 import { BaseDto } from './../../../database/entities/base.dto';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { ReviewEntity } from './../../../database/entities/review.entity';
 import { Exclude, Expose } from "class-transformer";
-import { IsInt, isNotEmptyObject, IsPositive, IsString, IsUUID } from "class-validator";
+import { IsEnum, IsInt, IsNotEmpty, isNotEmptyObject, IsPositive, IsString, IsUUID } from "class-validator";
 import { IsNull } from "typeorm";
 
 
@@ -14,6 +15,9 @@ export class CreateProductDto extends BaseDto {
 
   @IsString()
   description: string;
+
+  @IsEnum(Category)
+  Category: Category;
 
   
   @IsInt()
