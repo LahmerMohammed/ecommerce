@@ -6,7 +6,7 @@ import { ROLES_KEY } from "src/decorators/role.decorator";
 import { ProductService } from "src/modules/product/product.service";
 
 @Injectable()
-export class RolesGuard implements CanActivate {
+export class ProductGuard implements CanActivate {
   constructor(private reflector: Reflector,
     private readonly productService:  ProductService) {}
 
