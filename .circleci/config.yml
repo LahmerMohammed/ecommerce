@@ -26,6 +26,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
+      - run: npm install
       - run: npm run test
   deploy:
     docker:
