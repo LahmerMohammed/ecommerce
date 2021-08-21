@@ -6,16 +6,28 @@ import { Role } from 'src/database/entities/role.enum';
 import { AddressEntity } from 'src/database/entities/address.entity';
 
 
-@Expose()
+@Exclude()
 export class UserSerializer {
   
+  @Expose()
   id: string;
+
+  @Expose()
   username: string;
+  
+  @Expose()
   email: string;
+  
+  @Expose()
   whishlist_counter: number;
+  
+  @Expose()
   address: AddressEntity;
+  
+  @Expose()
   roles: Role[];
 
+  /*
   @Exclude()
   created_at: Date;
   
@@ -36,7 +48,7 @@ export class UserSerializer {
   added_products: ProductEntity[];
 
   @Exclude()
-  reviews: ReviewEntity[];
+  reviews: ReviewEntity[];*/
 
 
 }
