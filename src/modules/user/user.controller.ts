@@ -1,5 +1,5 @@
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
-import { RolesGuard } from './../../guards/product-owner.guard';
+import { ProductGuard } from './../../guards/product-owner.guard';
 import { UserSerializer } from './serializers/users.serializer';
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
@@ -12,6 +12,7 @@ import { Crud, CrudController, CrudRequest, Override, ParsedRequest } from "@nes
 import { ApiBearerAuth, ApiHeader, ApiParam, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/database/entities/role.enum';
+import { RolesGuard } from 'src/guards/role.guard';
 
 @ApiTags('user')
 @Crud({
