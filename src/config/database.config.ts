@@ -14,9 +14,9 @@ function getOptions() {
 
   connectionOptions = baseOptions;
 
-  if (process.env.NODE_ENV == 'production') {
+  if (process.env.DATABASE_URL) {
     Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
-  } else if( process.env.NODE_ENV == 'development' ) {
+  } else {
     require('dotenv').config({path: '.env/dev.env'})
     
     const dev = {
@@ -34,18 +34,6 @@ function getOptions() {
     };
     
     Object.assign(connectionOptions, dev);
-  }else {
-    require('dotenv').config({path: '.env/test.env'})
-    
-    const test = {
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      host: process.env.DB_HOST,
-      synchronize: true,
-    };
-    
-    Object.assign(connectionOptions, test);
   }
 
   console.log(connectionOptions);
