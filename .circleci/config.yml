@@ -25,7 +25,7 @@ jobs:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
-      - run: enpm run test
+      - run: npm run test
   deploy:
     docker:
       - image: cimg/node:10.19.0 # the primary container, where your job's commands are run
