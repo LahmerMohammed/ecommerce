@@ -1,3 +1,5 @@
+import { RolesGuard } from './../../../guards/role.guard';
+import { CanActivate } from '@nestjs/common';
 import { ProductModule } from './../../product/product.module';
 import { ProductService } from './../../product/product.service';
 import { getProductStub } from './samples/user.sample';
@@ -17,10 +19,16 @@ describe('UserController' , () => {
   let userService:  UserService;
 
   beforeEach( async() => {
+
+
+   const mock_RoleGuard: CanActivate = { canActivate: () => true};
+
     const moduleRef = await Test.createTestingModule({
       controllers: [UserController],
       providers: [UserService],
-    }).compile();
+    })
+    .overrideGuard(RolesGuard).useValue(mock_RoleGuard)
+    .compile();
 
     userController = moduleRef.get<UserController>(UserController);
     userService =  moduleRef.get<UserService>(UserService);
