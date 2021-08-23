@@ -3,7 +3,7 @@ import { ProductGuard } from './../../guards/product-owner.guard';
 import { UserSerializer } from './serializers/users.serializer';
 import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
 import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards, NotImplementedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
@@ -58,18 +58,18 @@ export class UserController implements CrudController<UserEntity> {
 
   @Put('/:id')
   async updateUser(@Param("id") user_id: string , @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
-    console.log(updateUserDto);
+    throw new NotImplementedException();
   }
 
 
   @Post('/whishlist/add')
   async addProductWhishlist(@Body() addProductWhishlist: AddProductWhishlist){
-    return this.service.addProductWhishlist(addProductWhishlist);
+    return await this.service.addProductWhishlist(addProductWhishlist);
   }
 
   @Delete('/whishlist/remove')
   async removeProductWhishlist(@Body() removeProductWhishlist: RemoveProductWhishlist) {
-    return this.service.removeProductWhishlist(removeProductWhishlist);
+    return await this.service.removeProductWhishlist(removeProductWhishlist);
   }
 
 }
