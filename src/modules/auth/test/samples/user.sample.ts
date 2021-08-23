@@ -6,17 +6,13 @@ import { Role } from 'src/database/entities/role.enum';
 
 
 
-export const getUserSample = () : CreateUserDto => {
-  return  {
-    username: 'test',
-    email: 'test@gmail.com',
-    password: '1234test',
-    address: null,
-    id: null,
-    updated_at: null,
-    isEmailConfirmed: null,
-    roles: null,
-    created_at: null,
+export const getUserSample = () : UserEntity => {
 
-  }
+  const user = new UserEntity();
+
+  user.email = 'test@gmail.com';
+  user.username = 'test@gmail.com';
+  user.password = 'test@gmail.com';
+  user.id = '1'
+  return  user;
 }
