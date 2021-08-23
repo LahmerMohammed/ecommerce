@@ -24,11 +24,10 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   }
   private async addProductWhishlist(user: UserEntity , product: ProductEntity) : Promise<UserEntity> {
    
-   user.whishlist.push(product);
+   const whishlist = user.whishlist;
+   whishlist.push(product);
 
-   await this.userRepo.update(user.id , user);
-
-   return user;
+   return await this.userRepo.save({...user , whishlist});
 
   }
 
@@ -36,15 +35,15 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   private async removeProductWhishlist(user: UserEntity , product: ProductEntity) : Promise<UserEntity> {
     
  
-    user.whishlist = user.whishlist.filter( _product => _product.id !== product.id)
+    const whishlist = user.whishlist.filter( _product => _product.id !== product.id)
  
-    await this.userRepo.update(user.id,user);
+    return await this.userRepo.save({...user , whishlist});
  
-    return user;
+
  
   }
 
-  async updateUserWhistlist(updateUserWhistlist: UpdateUserWhishlistDto){
+  async updateUserWhistlist(updateUserWhistlist: UpdateUserWhishlistDto) : Promise<UserEntity>{
     const user = await this.userRepo.findOne({
       id: updateUserWhistlist.user_id
     });
