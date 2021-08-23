@@ -1,3 +1,4 @@
+import { UserEntity } from './../../../database/entities/user.entity';
 import { CreateUserDto } from './../../user/dtos/create-user.dto';
 import { getUserSample } from './samples/user.sample';
 import { UserSerializer } from './../../user/serializers/users.serializer';
@@ -23,14 +24,16 @@ describe('AuthController' , () => {
   })
 
   describe('when register get called' , () => {
-    let user: CreateUserDto;
-
+    let user: UserEntity;
+    let createUserDto: CreateUserDto;
     beforeEach(async () => {
-      user = await authController.register(getUserSample());
+      createUserDto =  { username: 'test',email: 'test@gmail.com',password: '1234test'};
+       
+      user = await authController.register(createUserDto);
     })
 
     test('the it should call authService' , () => {
-      expect(authService.register).toBeCalledWith(user);
+      expect(authService.register).toBeCalledWith(createUserDto);
     })
 
     test('then it should return' , () => {
