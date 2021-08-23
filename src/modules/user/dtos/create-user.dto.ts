@@ -30,36 +30,24 @@ class AddressDto {
   zipcode: string;
 }
 
-@Expose()
-export class CreateUserDto  extends BaseDto{
+@Exclude()
+export class CreateUserDto {
 
-  @Exclude()
-  id: string;
-
-  @Exclude()
-  updated_at: Date;
-
-  @Exclude()
-  isEmailConfirmed: boolean;
-
-  @Exclude()
-  roles: Role[];
-
-
-  @Exclude()
-  created_at: Date;
-
+  @Expose()
   @IsString()
   @Length(4)
   username: string;
 
+  @Expose()
   @IsString()
   @Length(4)
   password: string;
 
+  @Expose()
   @IsEmail()
   email: string;
 
+  @Expose()
   @ValidateNested()
   address? : AddressDto;
 
