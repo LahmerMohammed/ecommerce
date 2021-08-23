@@ -1,8 +1,5 @@
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
-import { ProductGuard } from './../../guards/product-owner.guard';
 import { UserSerializer } from './serializers/users.serializer';
-import { RemoveProductWhishlist } from './dtos/whsihlist-dtos/remove-product-whishlist';
-import { AddProductWhishlist } from './dtos/whsihlist-dtos/add-product-whsilst.dto';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards, NotImplementedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -13,6 +10,7 @@ import { ApiBearerAuth, ApiHeader, ApiParam, ApiSecurity, ApiTags } from '@nestj
 import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/database/entities/role.enum';
 import { RolesGuard } from 'src/guards/role.guard';
+import { UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
 
 @ApiTags('user')
 @Crud({
@@ -62,14 +60,10 @@ export class UserController implements CrudController<UserEntity> {
   }
 
 
-  @Post('/whishlist/add')
-  async addProductWhishlist(@Body() addProductWhishlist: AddProductWhishlist){
-    return await this.service.addProductWhishlist(addProductWhishlist);
-  }
+  @Patch('/whishlist/update')
+  async updateUserWhishList(@Body() updateUserWhishList: UpdateUserWhishlistDto)
+  {
 
-  @Delete('/whishlist/remove')
-  async removeProductWhishlist(@Body() removeProductWhishlist: RemoveProductWhishlist) {
-    return await this.service.removeProductWhishlist(removeProductWhishlist);
   }
 
 }
