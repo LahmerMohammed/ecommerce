@@ -1,9 +1,13 @@
-ARG CODE_VERSION=16.04
-
-
+ARG CODE_VERSION=20.04
 FROM ubuntu:${CODE_VERSION}
+
+LABEL Creator: "Lahmer Mohammed"
+
 
 RUN apt update -y
 
-CMD ["zsh"]
+
+EXPOSE 80
+
+CMD ["bash"]
 
