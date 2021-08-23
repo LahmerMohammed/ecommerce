@@ -1,3 +1,6 @@
+import { ProductModule } from './../../product/product.module';
+import { ProductService } from './../../product/product.service';
+import { getProductStub } from './samples/user.sample';
 import { UserEntity } from './../../../database/entities/user.entity';
 import { getUpdateWhistlistStub } from './samples/update-whishlist.stub';
 import { UserService } from './../user.service';
@@ -15,32 +18,37 @@ describe('UserController' , () => {
 
   beforeEach( async() => {
     const moduleRef = await Test.createTestingModule({
-      imports: [],
       controllers: [UserController],
       providers: [UserService],
     }).compile();
 
     userController = moduleRef.get<UserController>(UserController);
     userService =  moduleRef.get<UserService>(UserService);
+    jest.clearAllMocks();
   })
-
-  //TODO : implementing testing for update user whishlist
 
   describe('when update user whishlist called' , () => {
 
-    let user: UserEntity;
+    describe('to add a product to user whishlist', () => {
+      
+      let user: UserEntity;
 
-    beforeEach( async () => {
-      user = await userController.updateUserWhishList(getUpdateWhistlistStub(ACTION.ADD));
+      beforeEach( async () => {
+        user = await userController.updateUserWhishList(getUpdateWhistlistStub(ACTION.ADD));
+      })
+
+      
+      test('then it should call userService' , () => {
+        expect(userService.updateUserWhistlist).toBeCalledWith(getUpdateWhistlistStub(ACTION.ADD))
+      });
+
+      test('and should return user with added product ' , () => {
+        expect(user.whishlist).toContainEqual(getProductStub())
+      })
+
     })
-
-    test.skip('then it should call userService' , () => {
-      expect(userController.updateUserWhishList).toBeCalledWith(getUpdateWhistlistStub(ACTION.ADD))
-    });
-
-    test.skip('and should return' , () => {
     
-    })
+    
   })
 
 })
