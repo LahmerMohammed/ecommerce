@@ -61,9 +61,9 @@ export class UserController implements CrudController<UserEntity> {
 
 
   @Patch('/whishlist/update')
-  async updateUserWhishList(@Body() updateUserWhishList: UpdateUserWhishlistDto)
+  async updateUserWhishList(@Body() updateUserWhishList: UpdateUserWhishlistDto) : Promise<UserEntity>
   {
-
+    return await this.updateUserWhishList(updateUserWhishList);
   }
 
 }
