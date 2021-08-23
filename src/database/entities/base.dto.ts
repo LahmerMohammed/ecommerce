@@ -1,9 +1,12 @@
-import { Exclude } from "class-transformer";
+import { Exclude, Expose } from "class-transformer";
 
 
+// No more need for this 
+
+// must be deleted
 
 
-
+Exclude()
 export class BaseDto {
 
   @Exclude()
