@@ -1,7 +1,7 @@
-import { getProductWhishlistSample } from './../test/samples/user.sample';
+import { ACTION } from '../dtos/update-user-whishlist.dto';
+import { getUserWhishlistStub } from '../test/samples/user.sample';
 
 
 export const UserService = jest.fn().mockReturnValue({
-  addProductWhishlist: jest.fn().mockResolvedValue(getProductWhishlistSample()),
-
+  updateUserWhistlist: jest.fn().mockResolvedValue(getUserWhishlistStub()),
 })
