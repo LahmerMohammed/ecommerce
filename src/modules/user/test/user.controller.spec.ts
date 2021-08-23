@@ -34,11 +34,11 @@ describe('UserController' , () => {
       user = await userController.updateUserWhishList(getUpdateWhistlistStub(ACTION.ADD));
     })
 
-    test('then it should call userService' , () => {
+    test.skip('then it should call userService' , () => {
       expect(userController.updateUserWhishList).toBeCalledWith(getUpdateWhistlistStub(ACTION.ADD))
     });
 
-    test('and should return' , () => {
+    test.skip('and should return' , () => {
     
     })
   })
