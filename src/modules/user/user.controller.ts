@@ -45,10 +45,9 @@ import { UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
   },
   
 })
-@Roles(Role.ADMIN)
-@UseGuards(JwtAuthGuard,RolesGuard)
+/*@Roles(Role.ADMIN)*/
+@UseGuards(JwtAuthGuard,/*RolesGuard*/)
 @Controller('users')
-@ApiBearerAuth('JWT')
 export class UserController implements CrudController<UserEntity> {
   constructor(public service: UserService) {
   }
@@ -63,7 +62,7 @@ export class UserController implements CrudController<UserEntity> {
   @Patch('/whishlist/update')
   async updateUserWhishList(@Body() updateUserWhishList: UpdateUserWhishlistDto) : Promise<UserEntity>
   {
-    return await this.updateUserWhishList(updateUserWhishList);
+    return await this.service.updateUserWhistlist(updateUserWhishList);
   }
 
 }
