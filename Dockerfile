@@ -1,13 +1,17 @@
-ARG CODE_VERSION=20.04
-FROM ubuntu:${CODE_VERSION}
+arg NODE_VERSION=14
+from node:${NODE_VERSION}
 
-LABEL Creator: "Lahmer Mohammed"
+label Creator: "Lahmer Mohammed"
+
+workdir /usr/src/backend
+
+copy package*.json ./
+
+run npm install
 
 
-RUN apt update -y
+copy . .
 
+expose 3000
 
-EXPOSE 80
-
-CMD ["bash"]
-
+cmd ["nest","start","--watch"]
