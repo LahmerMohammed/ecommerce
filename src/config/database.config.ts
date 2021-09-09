@@ -20,6 +20,7 @@ function getOptions() {
       connectionOptions,
       {
         url: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
         extra: {
           ssl: true
         },
