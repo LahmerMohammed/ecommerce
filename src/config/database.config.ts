@@ -8,6 +8,11 @@ const baseOptions: ConnectionOptions = {
   entities: ["dist/**/**.entity.js"],
   synchronize: false,
   ssl: { rejectUnauthorized: false },
+  migrations: ["dist/database/migration/*.js"],
+  cli: {
+    migrationsDir: "src/database/migration",
+  },
+  migrationsTableName: "migrations"
 };
 
 
@@ -30,11 +35,6 @@ function getOptions() {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       host: process.env.DB_HOST,
-      migrations: ["dist/database/migration/*.js"],
-      cli: {
-        migrationsDir: "src/database/migration",
-      },
-      migrationsTableName: "migrations"
     };
     
     Object.assign(connectionOptions, dev);
