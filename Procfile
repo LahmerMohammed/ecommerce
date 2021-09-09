@@ -1,1 +1,1 @@
-web: npm install -g ts-node typescript && npm run typeorm:migration:run && npm run start:prod
+web: npm install -g ts-node typescript && npm run build && npm run typeorm:migration:run && npm run start:prod
