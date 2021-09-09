@@ -7,6 +7,7 @@ const baseOptions: ConnectionOptions = {
   port: 5432,
   entities: ["dist/**/**.entity.js"],
   synchronize: false,
+  ssl: { rejectUnauthorized: false },
 };
 
 
@@ -19,11 +20,7 @@ function getOptions() {
     Object.assign(
       connectionOptions,
       {
-        url: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: true },
-        extra: {
-          ssl: true
-        },
+        url: process.env.DATABASE_URL
       });
   } else {
     require('dotenv').config({path: '.env/dev.env'})
@@ -37,8 +34,7 @@ function getOptions() {
       cli: {
         migrationsDir: "src/database/migration",
       },
-      migrationsTableName: "migrations",
-      ssl: { rejectUnauthorized: false },
+      migrationsTableName: "migrations"
     };
     
     Object.assign(connectionOptions, dev);
