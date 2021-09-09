@@ -20,7 +20,9 @@ function getOptions() {
       connectionOptions,
       {
         url: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: true },
+        extra: {
+          ssl: true
+        },
       });
   } else {
     require('dotenv').config({path: '.env/dev.env'})
