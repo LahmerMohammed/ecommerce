@@ -5,7 +5,7 @@ import { UserEntity } from './../../database/entities/user.entity';
 import { CreateUserDto } from './../user/dtos/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UserService } from './../user/user.service';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt'; 
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -45,11 +45,27 @@ export class AuthService {
   }
 
   async register(createUserDto: CreateUserDto) {
+
+    const userExist = await this.userService.findOne({
+      where: [
+        {username: createUserDto.username},
+        {email: createUserDto.email}
+      ]
+    });
+
+    if( userExist )
+    {
+      throw new ConflictException('user already exist');
+    }
+
     const user = await this.userService.userRepo.save(createUserDto); 
 
     const result = await this.mailService.sendConfirmationEmail(user.email);
 
-    return user;
+    return {
+      user: user,
+      mailer_response: result,
+    };
   }
 
 }
