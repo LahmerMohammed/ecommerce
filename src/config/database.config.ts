@@ -5,7 +5,8 @@ import { ConnectionOptions, createConnection } from "typeorm";
 const baseOptions: ConnectionOptions = {
   type: "postgres",
   port: 5432,
-  entities: ["dist/**/**.entity.js"]
+  entities: ["dist/**/**.entity.js"],
+  synchronize: false,
 };
 
 
@@ -15,7 +16,12 @@ function getOptions() {
   connectionOptions = baseOptions;
 
   if (process.env.DATABASE_URL) {
-    Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
+    Object.assign(
+      connectionOptions,
+      {
+        url: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: true },
+      });
   } else {
     require('dotenv').config({path: '.env/dev.env'})
     
@@ -29,7 +35,6 @@ function getOptions() {
         migrationsDir: "src/database/migration",
       },
       migrationsTableName: "migrations",
-      synchronize: false,
       ssl: { rejectUnauthorized: false },
     };
     
