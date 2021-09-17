@@ -50,13 +50,6 @@ export class MailService {
     }
 
     await this.userService.setEmailConfirmed(email);
-
-    const res = {
-      statusCode: 200,
-      message: 'Email Confirmed'
-    };
-
-    return res;
   }
 
 
