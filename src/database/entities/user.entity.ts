@@ -61,11 +61,6 @@ export class UserEntity extends BaseEntity{
   @JoinColumn({name: 'address_id'})
   address: AddressEntity;
 
-  @BeforeInsert()
-  async hashPassword() {
-    this.password = await bcrypt.hash(this.password,10);
-  } 
-
 
   @OneToMany(type => ReviewEntity , review => review.user, {eager: false})
   reviews: ReviewEntity[];

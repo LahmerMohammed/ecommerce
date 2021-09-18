@@ -13,6 +13,7 @@ import { Repository } from 'typeorm';
 import { MailService } from '../mail/mail.service';
 
 
+
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService,
@@ -57,8 +58,11 @@ export class AuthService {
     {
       throw new ConflictException('user already exist');
     }
+  
+    createUserDto.password = await bcrypt.hash(createUserDto.password , 10);
 
     const user = await this.userService.userRepo.save(createUserDto); 
+    
 
     const result = await this.mailService.sendConfirmationEmail(user.email);
 
