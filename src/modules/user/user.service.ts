@@ -76,5 +76,9 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   }
     
   
-  
+  async getUserByEmail(email: string) : Promise<UserEntity> {
+    const user = await this.userRepo.findOne({email: email});
+    
+    return user;
+  }
 }

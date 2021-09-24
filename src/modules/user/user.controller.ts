@@ -1,6 +1,8 @@
+import { plainToClass } from 'class-transformer';
+import { ClassSerializerInterceptor } from '@nestjs/common';
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import { UserSerializer } from './serializers/users.serializer';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards, NotImplementedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards, NotImplementedException, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
@@ -65,4 +67,11 @@ export class UserController implements CrudController<UserEntity> {
     return await this.service.updateUserWhistlist(updateUserWhishList);
   }
 
+
+  @Get('/email/:email')
+  async getUserByEmail(@Param() params) : Promise<UserSerializer> {
+    const user = await this.service.getUserByEmail(params.email);
+  
+    return plainToClass(UserSerializer , user);
+  }
 }
