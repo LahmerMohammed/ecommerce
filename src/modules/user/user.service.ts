@@ -1,7 +1,6 @@
+import { TokenBlacklist } from '../../database/entities/token-blacklist.entity';
 import { ProductEntity } from './../../database/entities/product.entity';
 import { ACTION, UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
-import { CrudRequest } from '@nestjsx/crud';
 import { ProductService } from './../product/product.service';
 import { forwardRef, Inject, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
@@ -9,8 +8,11 @@ import { UserEntity } from 'src/database/entities/user.entity';
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Override } from '@nestjsx/crud';
 import { MailerService } from '@nestjs-modules/mailer';
+import { JwtService } from '@nestjs/jwt';
+
+require('dotenv').config('.env/dev.env')
+
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
@@ -18,8 +20,9 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   constructor(
     @InjectRepository(UserEntity) public readonly userRepo: Repository<UserEntity>,
     @Inject(forwardRef(() => ProductService)) private readonly productService: ProductService,
-    
-    private readonly mailService: MailerService) {
+    @InjectRepository(TokenBlacklist) private readonly tokenRepo: Repository<TokenBlacklist>,
+    private readonly mailService: MailerService,
+    private jwtService: JwtService) {
     super(userRepo);
   }
   private async addProductWhishlist(user: UserEntity , product: ProductEntity) : Promise<UserEntity> {
@@ -80,5 +83,16 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     const user = await this.userRepo.findOne({email: email});
     
     return user;
+  }
+
+  addTokenToBlacklist(token: TokenBlacklist) {
+
+    const res = this.jwtService.verify(token.token,{
+      secret: process.env.JWT_SECRET
+    });
+
+    console.log(res);
+
+    //this.tokenRepo.save(token);
   }
 }

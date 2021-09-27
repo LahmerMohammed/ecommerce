@@ -1,3 +1,4 @@
+import { TokenBlacklist } from '../../database/entities/token-blacklist.entity';
 import { plainToClass } from 'class-transformer';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
@@ -73,5 +74,12 @@ export class UserController implements CrudController<UserEntity> {
     const user = await this.service.getUserByEmail(params.email);
   
     return plainToClass(UserSerializer , user);
+  }
+
+
+  @Post('/blacklist')
+  addTokenToBlacklist(@Body() token : TokenBlacklist) {
+
+    this.service.addTokenToBlacklist(token);
   }
 }
