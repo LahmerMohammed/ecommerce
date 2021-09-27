@@ -9,6 +9,7 @@ import typeOrmConfig = require("./config/database.config");
 import { ConfigModule } from '@nestjs/config'
 import { MailerModule } from "@nestjs-modules/mailer";
 import { MailModule } from './modules/mail/mail.module';
+import { ScheduleModule } from "@nestjs/schedule";
 
 
 @Module({
@@ -18,7 +19,8 @@ import { MailModule } from './modules/mail/mail.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     ReviewModule,
     AuthModule,
-    MailModule
+    MailModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [],
   providers: [],
