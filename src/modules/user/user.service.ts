@@ -87,12 +87,14 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
   addTokenToBlacklist(token: TokenBlacklist) {
 
-    const res = this.jwtService.verify(token.token,{
+    let { exp } = this.jwtService.verify(token.token , {
       secret: process.env.JWT_SECRET
     });
 
-    console.log(res);
+    exp *= 1000;
 
-    //this.tokenRepo.save(token);
+    if( Date.now() < exp ){
+      this.tokenRepo.save(token);
+    }
   }
 }
