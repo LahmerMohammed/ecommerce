@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MailerService } from '@nestjs-modules/mailer';
 import { JwtService } from '@nestjs/jwt';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 require('dotenv').config('.env/dev.env')
 
@@ -85,22 +86,48 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     return user;
   }
 
-  addTokenToBlacklist(token: TokenBlacklist) {
-
-    let { exp } = this.jwtService.verify(token.token , {
+  isTokenExpired(token: string) {
+    
+    let { exp } = this.jwtService.verify(token , {
       secret: process.env.JWT_SECRET
     });
 
     exp *= 1000;
+    return Date.now() >= exp;
+  }
 
-    if( Date.now() < exp ){
+  addTokenToBlacklist(token: TokenBlacklist) {
+
+    const isExpired = this.isTokenExpired(token.token);
+
+    if( !isExpired){
       this.tokenRepo.save(token);
     }
+    
   }
 
   async isTokenBlacklisted(token: string) {
     const tokenBlacklist = await this.tokenRepo.findOne({token: token});
 
     return tokenBlacklist != undefined;
+  }
+
+  @Cron(CronExpression.EVERY_5_HOURS)
+  async removeExpiredToken() {
+
+    const tokensToRemove: TokenBlacklist[] = [];
+
+    const tokens = await this.tokenRepo.find();
+
+    tokens.map((tokenBlacklist: TokenBlacklist) => {
+
+      const isExpired = this.isTokenExpired(tokenBlacklist.token);
+    
+      if( isExpired ) {
+        tokensToRemove.push(tokenBlacklist);
+      } 
+    });
+
+    this.tokenRepo.remove(tokensToRemove);
   }
 }
