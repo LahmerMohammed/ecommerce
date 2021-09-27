@@ -97,4 +97,10 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
       this.tokenRepo.save(token);
     }
   }
+
+  async isTokenBlacklisted(token: string) {
+    const tokenBlacklist = await this.tokenRepo.findOne({token: token});
+
+    return tokenBlacklist != undefined;
+  }
 }
