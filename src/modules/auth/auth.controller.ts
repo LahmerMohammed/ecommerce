@@ -1,3 +1,4 @@
+import { TokenBlacklist } from 'src/database/entities/token-blacklist.entity';
 import { EmailConfirmedGuard } from './../../guards/email-confirmed.guard';
 import { CreateUserDto } from './../user/dtos/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -27,4 +28,8 @@ export class AuthController {
     return await this.authService.register(createUserDto);
   }
 
+  @Post('/logout')
+  logout(@Body() tokenBlacklist: TokenBlacklist) {
+    this.authService.logout(tokenBlacklist);
+  }
 }

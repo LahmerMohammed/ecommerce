@@ -1,3 +1,4 @@
+import { TokenBlacklist } from 'src/database/entities/token-blacklist.entity';
 import { JwtPayload } from './interfaces/payload.interface';
 import { UserSerializer } from './../user/serializers/users.serializer';
 import { plainToClass } from 'class-transformer';
@@ -70,6 +71,11 @@ export class AuthService {
       user: user,
       mailer_response: result,
     };
+  }
+
+
+  logout(tokenBlacklist: TokenBlacklist) {
+    this.userService.addTokenToBlacklist(tokenBlacklist);
   }
 
 }
