@@ -49,7 +49,7 @@ import { UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
   
 })
 @Roles(Role.ADMIN)
-//@UseGuards(JwtAuthGuard,RolesGuard)
+@UseGuards(JwtAuthGuard/**,RolesGuard */)
 @Controller('users')
 export class UserController implements CrudController<UserEntity> {
   constructor(public service: UserService) {
