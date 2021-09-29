@@ -107,9 +107,10 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   }
 
   async isTokenBlacklisted(token: string) {
+
     const tokenBlacklist = await this.tokenRepo.findOne({token: token});
 
-    return tokenBlacklist != undefined;
+    return !(tokenBlacklist === undefined);
   }
 
   @Cron(CronExpression.EVERY_5_HOURS)
