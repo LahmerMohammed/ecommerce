@@ -1,3 +1,4 @@
+import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 import { ClassSerializerInterceptor, ValidationPipe } from "@nestjs/common";
 import { NestFactory, Reflector } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
@@ -16,6 +17,8 @@ async function bootstrap() {
     .setVersion("1.0")
     .addTag("e-commerce")
     .build();
+
+  app.useGlobalFilters(new HttpExceptionFilter());
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("docs", app, document);
 
