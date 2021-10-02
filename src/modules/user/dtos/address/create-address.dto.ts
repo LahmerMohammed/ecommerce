@@ -22,5 +22,5 @@ export class CreateAddressDto {
   address_line: string;
 
   @IsOptional()
-  user_id: string;
+  user: { id: string };
 }
