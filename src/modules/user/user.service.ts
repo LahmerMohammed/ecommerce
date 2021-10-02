@@ -139,7 +139,8 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
 
   async addUserAddress(user_id: string, address: CreateAddressDto) {
-    address.user_id = user_id;
+    address.user = {id: user_id};
+
     const result = await this.addressRepo.save(address);
 
     return result;
@@ -166,7 +167,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
 
   async getAddresses(user_id: string) {
-    return await this.addressRepo.find({user: {id: user_id}});
+    return await this.addressRepo.find({user: {id: user_id} });
   }
   
 }
