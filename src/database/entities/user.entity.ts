@@ -5,12 +5,11 @@ import { BaseEntity } from "./BaseEntity";
 import { ProductEntity } from "./product.entity";
 import { AddressEntity } from "./address.entity";
 import { Role } from './role.enum';
+import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 
 
-/**
- * TODO : add AfterLoad for 'whishlist_counter'
- */
+
 @Entity("user")
 export class UserEntity extends BaseEntity{
 
@@ -19,6 +18,12 @@ export class UserEntity extends BaseEntity{
   
   @Column()
   password: string;
+
+  @Column({type: 'date' , nullable: true})
+  birthdate: string;
+
+  @Column({nullable: true})
+  phonenumber: string;
 
   @Column({unique:true})
   email: string;
@@ -62,8 +67,6 @@ export class UserEntity extends BaseEntity{
 
   @AfterLoad()
   loadWhishlistCounter(){
-      
-    this.whishlist_counter = this.whishlist ? this.whishlist.length : 0 ;
-
+    this.whishlist_counter = this.whishlist ? this.whishlist.length : 0;
   }
 }
