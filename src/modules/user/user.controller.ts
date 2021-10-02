@@ -58,13 +58,15 @@ export class UserController implements CrudController<UserEntity> {
   }
  
 
-  @Put('/:id')
-  async updateUser(@Param("id") user_id: string , @Body(ValidationPipe) updateUserDto: UpdateUserDto) {
-    throw new NotImplementedException();
+  @Put('/')
+  async updateUser(@Req() req , @Body() updateUserDto: UpdateUserDto) {
+    
+    const { id } = req.user;
+    return await this.service.updateUser(id , updateUserDto);
   }
 
 
-  @Patch('/whishlist/update')
+  @Put('/whishlist/update')
   async updateUserWhishList(@Body() updateUserWhishList: UpdateUserWhishlistDto) : Promise<UserEntity>
   {
     return await this.service.updateUserWhistlist(updateUserWhishList);
