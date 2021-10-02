@@ -92,6 +92,12 @@ export class UserController implements CrudController<UserEntity> {
     return await this.service.addUserAddress(id , createAddressDto);
   }
 
+  @Get('/address')
+  async getUserAddresses(@Req() request)  {
+    const { id } = request.user;
+    return await this.service.getAddresses(id);
+  }
+
   @Put('/address')
   async updateUserAddress(@Req() request , @Body() updateAddressDto: UpdateAddressDto)  {
     const { id } = request.user;

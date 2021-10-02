@@ -163,5 +163,10 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   async updateUser(user_id: string, updateUserDto: UpdateUserDto) {
     return await this.userRepo.save({id: user_id, ...updateUserDto});
   }
+
+
+  async getAddresses(user_id: string) {
+    return await this.addressRepo.find({user: {id: user_id}});
+  }
   
 }
