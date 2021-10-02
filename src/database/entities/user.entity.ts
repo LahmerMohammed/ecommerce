@@ -51,15 +51,8 @@ export class UserEntity extends BaseEntity{
   added_products: ProductEntity[];
 
 
-  @OneToOne(type => AddressEntity , {
-    nullable: true,
-    eager: true,
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-    cascade: true
-  })
-  @JoinColumn({name: 'address_id'})
-  address: AddressEntity;
+  @OneToMany(type => AddressEntity , address => address.user)
+  addresses: AddressEntity[];
 
 
   @OneToMany(type => ReviewEntity , review => review.user, {eager: false})

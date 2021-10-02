@@ -1,5 +1,6 @@
+import { UserEntity } from './user.entity';
 import { BaseEntity } from "src/database/entities/BaseEntity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from "typeorm";
 
 @Entity("address")
 export class AddressEntity extends BaseEntity{
@@ -18,4 +19,8 @@ export class AddressEntity extends BaseEntity{
   
   @Column()
   zipcode: string;
+
+  @ManyToOne(type => UserEntity , user => user.reviews)
+  @JoinColumn({name: 'user_id'})
+  user: UserEntity;
 }
