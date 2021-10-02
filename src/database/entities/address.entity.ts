@@ -6,20 +6,14 @@ import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from "typeorm";
 export class AddressEntity extends BaseEntity{
   
   @Column()
-  street: string;
+  name: string;
 
   @Column()
-  country: string;
+  phonenumber: string;
   
   @Column()
-  city: string;
-  
-  @Column()
-  town: string;
-  
-  @Column()
-  zipcode: string;
-
+  address_line: string;
+ 
   @ManyToOne(type => UserEntity , user => user.reviews)
   @JoinColumn({name: 'user_id'})
   user: UserEntity;
