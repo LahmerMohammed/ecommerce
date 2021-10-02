@@ -1,6 +1,6 @@
 import { TokenBlacklist } from 'src/database/entities/token-blacklist.entity';
 import { EmailConfirmedGuard } from './../../guards/email-confirmed.guard';
-import { CreateUserDto } from './../user/dtos/create-user.dto';
+import { CreateUserDto } from './../user/dtos/user/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt.guard';

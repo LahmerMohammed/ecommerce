@@ -3,7 +3,7 @@ import { JwtPayload } from './interfaces/payload.interface';
 import { UserSerializer } from './../user/serializers/users.serializer';
 import { plainToClass } from 'class-transformer';
 import { UserEntity } from './../../database/entities/user.entity';
-import { CreateUserDto } from './../user/dtos/create-user.dto';
+import { CreateUserDto } from './../user/dtos/user/create-user.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { UserService } from './../user/user.service';
 import { ConflictException, Injectable } from '@nestjs/common';

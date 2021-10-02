@@ -1,4 +1,4 @@
-import { CreateUserDto } from './../../../user/dtos/create-user.dto';
+import { CreateUserDto } from './../../../user/dtos/user/create-user.dto';
 import { UserSerializer } from './../../../user/serializers/users.serializer';
 
 import { UserEntity } from './../../../../database/entities/user.entity';
