@@ -1,5 +1,5 @@
 import { Exclude, Expose } from "class-transformer";
-import { IsString, IsISO31661Alpha2, IsPostalCode, Length, IsNotEmpty } from "class-validator";
+import { IsString, IsISO31661Alpha2, IsPostalCode, Length, IsNotEmpty, IsUUID, IsOptional } from "class-validator";
 
 
 
@@ -20,4 +20,7 @@ export class CreateAddressDto {
   @IsString()
   @IsNotEmpty()
   address_line: string;
+
+  @IsOptional()
+  user_id: string;
 }
