@@ -14,6 +14,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { JwtService } from '@nestjs/jwt';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateAddressDto } from './dtos/address/create-address.dto';
+import { UpdateUserDto } from './dtos/user/update-user.dto';
 
 require('dotenv').config('.env/dev.env')
 
@@ -156,6 +157,11 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
       throw new UnauthorizedException();
     }
 
-    return await this.addressRepo.update({id: oldAddress.id} , newAddress);
+    return await this.addressRepo.save({id: oldAddress.id, ...newAddress});
   }
+
+  async updateUser(user_id: string, updateUserDto: UpdateUserDto) {
+    return await this.userRepo.save({id: user_id, ...updateUserDto});
+  }
+  
 }
