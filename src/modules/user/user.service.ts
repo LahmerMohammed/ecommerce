@@ -1,3 +1,5 @@
+import { UpdateAddressDto } from './dtos/address/update-address.dto';
+import { AddressEntity } from 'src/database/entities/address.entity';
 import { TokenBlacklist } from '../../database/entities/token-blacklist.entity';
 import { ProductEntity } from './../../database/entities/product.entity';
 import { ACTION, UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
@@ -11,17 +13,19 @@ import { Repository } from 'typeorm';
 import { MailerService } from '@nestjs-modules/mailer';
 import { JwtService } from '@nestjs/jwt';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { CreateAddressDto } from './dtos/address/create-address.dto';
 
 require('dotenv').config('.env/dev.env')
 
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
-
+  
   constructor(
     @InjectRepository(UserEntity) public readonly userRepo: Repository<UserEntity>,
     @Inject(forwardRef(() => ProductService)) private readonly productService: ProductService,
     @InjectRepository(TokenBlacklist) private readonly tokenRepo: Repository<TokenBlacklist>,
+    @InjectRepository(AddressEntity) private readonly addressRepo: Repository<AddressEntity>,
     private readonly mailService: MailerService,
     private jwtService: JwtService) {
     super(userRepo);
@@ -130,5 +134,28 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     });
 
     this.tokenRepo.remove(tokensToRemove);
+  }
+
+
+  async addUserAddress(user_id: string, address: CreateAddressDto) {
+    address.user_id = user_id;
+    const result = await this.addressRepo.save(address);
+
+    return result;
+  }
+
+  async updateUserAddress(user_id: string , newAddress: UpdateAddressDto){
+
+    const oldAddress = await this.addressRepo.findOne({id: newAddress.id });
+
+    if( !oldAddress ) {
+      throw new NotFoundException();
+    }
+
+    if( oldAddress.user.id != user_id) {
+      throw new UnauthorizedException();
+    }
+
+    return await this.addressRepo.update({id: oldAddress.id} , newAddress);
   }
 }

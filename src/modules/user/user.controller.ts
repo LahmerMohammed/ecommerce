@@ -1,6 +1,8 @@
+import { UpdateAddressDto } from './dtos/address/update-address.dto';
+import { CreateAddressDto } from './dtos/address/create-address.dto';
 import { TokenBlacklist } from '../../database/entities/token-blacklist.entity';
 import { plainToClass } from 'class-transformer';
-import { ClassSerializerInterceptor } from '@nestjs/common';
+import { ClassSerializerInterceptor, Req } from '@nestjs/common';
 import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import { UserSerializer } from './serializers/users.serializer';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ValidationPipe, UseGuards, NotImplementedException, UseInterceptors } from '@nestjs/common';
@@ -76,10 +78,21 @@ export class UserController implements CrudController<UserEntity> {
     return plainToClass(UserSerializer , user);
   }
 
-
   @Post('/blacklist')
   addTokenToBlacklist(@Body() token : TokenBlacklist) {
 
     this.service.addTokenToBlacklist(token);
+  }
+
+  @Post('/address')
+  async addUserAddress(@Req() request , @Body() createAddressDto: CreateAddressDto)  {
+    const { id } = request.user;
+    return await this.service.addUserAddress(id , createAddressDto);
+  }
+
+  @Put('/address')
+  async updateUserAddress(@Req() request , @Body() updateAddressDto: UpdateAddressDto)  {
+    const { id } = request.user;
+    return await this.service.updateUserAddress(id , updateAddressDto);
   }
 }
