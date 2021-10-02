@@ -93,7 +93,7 @@ export class UserController implements CrudController<UserEntity> {
   }
 
   @Get('/address')
-  async getUserAddresses(@Req() request)  {
+  async getAddresses(@Req() request)  {
     const { id } = request.user;
     return await this.service.getAddresses(id);
   }
