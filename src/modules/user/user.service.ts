@@ -169,5 +169,22 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
   async getAddresses(user_id: string) {
     return await this.addressRepo.find({user: {id: user_id} });
   }
+
+  async deleteAddress(user_id: string , address_id) {
+    
+    const address = await  this.addressRepo.findOne({id: address_id});
+
+    if( !address ) {
+      throw new NotFoundException();
+    }
+
+
+    if( address.user.id != user_id ){
+      throw new UnauthorizedException();
+    }
+
+    await this.addressRepo.remove(address);
+
+  }
   
 }
