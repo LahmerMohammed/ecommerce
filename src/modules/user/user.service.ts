@@ -170,7 +170,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     return await this.addressRepo.find({user: {id: user_id} });
   }
 
-  async deleteAddress(user_id: string , address_id) {
+  async deleteAddress(user_id: string , address_id: string) {
     
     const address = await  this.addressRepo.findOne({id: address_id});
 
