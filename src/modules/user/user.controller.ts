@@ -16,6 +16,7 @@ import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/database/entities/role.enum';
 import { RolesGuard } from 'src/guards/role.guard';
 import { UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
+import { throws } from 'assert';
 
 @ApiTags('user')
 @Crud({
@@ -102,5 +103,12 @@ export class UserController implements CrudController<UserEntity> {
   async updateUserAddress(@Req() request , @Body() updateAddressDto: UpdateAddressDto)  {
     const { id } = request.user;
     return await this.service.updateUserAddress(id , updateAddressDto);
+  }
+
+  @Delete('/address/:id')
+  async deleteUserAddress(@Req() request , @Param('id') address_id: string){
+    const { id } = request.user;
+    
+    await this.service.deleteAddress(id , address_id);
   }
 }
