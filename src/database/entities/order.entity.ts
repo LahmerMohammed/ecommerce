@@ -15,13 +15,13 @@ export class OrderEntity extends BaseEntity {
   })
   status: ORDER_STATUS;
 
-  @Column({type: 'datetime'})
+  @Column({type: 'timestamp'})
   purshase_date: string;
 
 
-  @Column({name: 'shipping_address_id'})
+ /*  @Column({name: 'shipping_address_id'})
   @ManyToOne(type => AddressEntity)
-  shipping_address: AddressEntity;
+  shipping_address: AddressEntity; */
 
   @Column({type: 'int'})
   subtotal_price: number;
