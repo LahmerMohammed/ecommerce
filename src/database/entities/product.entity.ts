@@ -15,10 +15,13 @@ export class ProductEntity extends BaseEntity {
   description: string;
 
   @Column({type: 'int'})
-  price: number;
+  sale_price: number;
 
   @Column({type: 'int'})
-  quantity: number;
+  regular_price: number;
+
+  @Column({type: 'int'})
+  stock: number;
 
   @OneToMany(type => ReviewEntity , review => review.product)
   reviews: ReviewEntity[];
@@ -37,5 +40,8 @@ export class ProductEntity extends BaseEntity {
     name: 'category'
   })
   category: Category;
+  
+  @Column("varchar",{array: true})
+  tags: string[];
 
 }
