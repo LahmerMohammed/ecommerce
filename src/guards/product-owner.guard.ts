@@ -19,9 +19,9 @@ export class ProductGuard implements CanActivate {
     
 
     const { user } = context.switchToHttp().getRequest();
-    const  body : UpdateProductDto = context.switchToHttp().getRequest().body;
+    const  updateProductDto : UpdateProductDto = context.switchToHttp().getRequest().body;
     
-    const isOwner = await this.productService.isOwner(user.id,body.id);
+    const isOwner = await this.productService.isOwner(user.id,updateProductDto.id);
 
     return requiredRoles.some(role => user.roles.includes(role)) || isOwner; 
 

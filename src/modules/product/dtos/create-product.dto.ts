@@ -29,8 +29,7 @@ export class CreateProductDto extends BaseDto {
   quantity: number;
 
   @IsUUID()
-  added_by_admin_id: string;
-
+  added_by_user_id: string;
 
   @Exclude()
   reviews: ReviewEntity[];
