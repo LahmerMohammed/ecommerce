@@ -20,7 +20,11 @@ import { ScheduleModule } from "@nestjs/schedule";
     ReviewModule,
     AuthModule,
     MailModule,
-    ScheduleModule.forRoot()
+    ScheduleModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['./.env/dev.env']
+    }),
   ],
   controllers: [],
   providers: [],
