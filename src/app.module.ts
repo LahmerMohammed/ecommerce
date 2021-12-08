@@ -1,3 +1,4 @@
+import { FirebaseModule } from './modules/firebase/firebase.module';
 import { Module } from "@nestjs/common";
 import { ProductModule } from "./modules/product/product.module";
 import { UserModule } from "./modules/user/user.module";
@@ -25,6 +26,7 @@ import { ScheduleModule } from "@nestjs/schedule";
       isGlobal: true,
       envFilePath: ['./.env/dev.env']
     }),
+    FirebaseModule,
   ],
   controllers: [],
   providers: [],
