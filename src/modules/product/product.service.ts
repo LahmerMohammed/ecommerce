@@ -1,3 +1,4 @@
+import { FirebaseService } from './../firebase/firebase.service';
 import { UserService } from './../user/user.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
@@ -7,29 +8,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
 import { plainToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
+import * as firebase from 'firebase-admin';
 
 @Injectable()
 export class ProductService extends TypeOrmCrudService<ProductEntity> {
   constructor(@InjectRepository(ProductEntity) private readonly productRepo : Repository<ProductEntity>,
-  @Inject(forwardRef(() => UserService )) private readonly userService: UserService){
+              @Inject(forwardRef(() => UserService )) private readonly userService: UserService,
+              private readonly firebaseService: FirebaseService,
+              ){
     super(productRepo);
   }
 
 
   @Override('createOneBase')
-  async createOneBase(createProductDto: CreateProductDto) {
+  async createOneBase(createProductDto: CreateProductDto,
+                      images: Array<Express.Multer.File>) {
     var product = plainToClass(ProductEntity,createProductDto);
 
-
-    const user = await this.userService.findOne({id: createProductDto.added_by_admin_id});
+  
+    const user = await this.userService.findOne({id: createProductDto.added_by_user_id});
 
     if( !user ){
-      throw new UnauthorizedException('invalid admin');
+      throw new UnauthorizedException('user not found');
     }
-
     product.added_by = user;
 
-    await this.productRepo.save(product);
+    return await this.productRepo.save(product);
 
   }
 
@@ -40,24 +44,26 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     var products = plainToClass(ProductEntity,createProductsDto);
 
 
-    const user = await this.userService.findOne({id: createProductsDto[0]!.added_by_admin_id});
+    const user = await this.userService.findOne({id: createProductsDto[0]!.added_by_user_id});
 
     if( !user ){
-      throw new UnauthorizedException('invalid admin');
+      throw new UnauthorizedException('user not found');
     }
 
     products.forEach(product => {
       product.added_by = user;
     });
 
-    await this.productRepo.save(products);
+    return await this.productRepo.save(products);
 
   }
+
+  
 
   async isOwner(product_id: string , user_id: string) : Promise<boolean>{
     
     const product = await this.productRepo.findOne({id: product_id});
   
-    return product.added_by_id == user_id
+    return product.added_by_id == user_id;
   }
 }
