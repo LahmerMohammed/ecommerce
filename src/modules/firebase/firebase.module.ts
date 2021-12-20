@@ -4,13 +4,9 @@ import { Module } from "@nestjs/common";
 
 
 
-
-
-
-
-
 @Module({
   exports: [FirebaseService],
-  imports: [FirebaseService],
+  providers: [FirebaseService],
+  
 })
 export class FirebaseModule{}

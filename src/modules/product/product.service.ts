@@ -1,5 +1,5 @@
-import { FirebaseService } from './../firebase/firebase.service';
-import { UserService } from './../user/user.service';
+/* import { FirebaseService } from './../firebase/firebase.service';
+ */import { UserService } from './../user/user.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
@@ -9,12 +9,13 @@ import { Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
 import { plainToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
 import * as firebase from 'firebase-admin';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable()
 export class ProductService extends TypeOrmCrudService<ProductEntity> {
   constructor(@InjectRepository(ProductEntity) private readonly productRepo : Repository<ProductEntity>,
               @Inject(forwardRef(() => UserService )) private readonly userService: UserService,
-              private readonly firebaseService: FirebaseService,
+              private readonly firebaseService: FirebaseService, 
               ){
     super(productRepo);
   }
@@ -23,8 +24,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
   @Override('createOneBase')
   async createOneBase(createProductDto: CreateProductDto,
                       images: Array<Express.Multer.File>) {
-    var product = plainToClass(ProductEntity,createProductDto);
-
+   /*  var product = plainToClass(ProductEntity,createProductDto);
   
     const user = await this.userService.findOne({id: createProductDto.added_by_user_id});
 
@@ -33,7 +33,10 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     }
     product.added_by = user;
 
-    return await this.productRepo.save(product);
+    return await this.productRepo.save(product); */
+
+    console.log(createProductDto);
+    return await this.firebaseService.uploadFiles(images);
 
   }
 

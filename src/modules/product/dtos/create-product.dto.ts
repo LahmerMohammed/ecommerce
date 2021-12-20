@@ -28,7 +28,8 @@ export class CreateProductDto extends BaseDto {
   @IsPositive()
   quantity: number;
 
-  @IsUUID()
+  /** should be excluded also , extract it from jwt */
+  @Exclude()
   added_by_user_id: string;
 
   @Exclude()

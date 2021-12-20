@@ -21,7 +21,7 @@ async function bootstrap() {
     .setDescription("API description")
     .setVersion("1.0")
     .addTag("e-commerce")
-    .build();
+    .build(); 
 
   app.useGlobalFilters(new HttpExceptionFilter());
   const document = SwaggerModule.createDocument(app, config);
@@ -32,6 +32,10 @@ async function bootstrap() {
   const serviceAccount : ServiceAccount = require('./ecommerce-file-storage-c603e-firebase-adminsdk-bctqi-1f5a3cbf24.json');
   admin.initializeApp({credential: admin.credential.cert(serviceAccount)});
 
+  /* 
+  const storage = admin.storage();
+  const bucket = storage.bucket("gs://ecommerce-file-storage-c603e.appspot.com");
+  bucket.upload('/home/mohammed/Pictures/dossier_electronique/MasterChoix.pdf'); */
 
   await app.listen(process.env.PORT || 3000);
 }
