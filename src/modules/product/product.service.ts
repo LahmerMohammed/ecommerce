@@ -24,7 +24,8 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
   @Override('createOneBase')
   async createOneBase(createProductDto: CreateProductDto,
                       images: Array<Express.Multer.File>) {
-   /*  var product = plainToClass(ProductEntity,createProductDto);
+    
+    var product = plainToClass(ProductEntity,createProductDto);
   
     const user = await this.userService.findOne({id: createProductDto.added_by_user_id});
 
@@ -33,10 +34,11 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     }
     product.added_by = user;
 
-    return await this.productRepo.save(product); */
+    await this.productRepo.save(product); 
 
-    console.log(createProductDto);
-    return await this.firebaseService.uploadFiles(images);
+    const  uploadFilesDto  = {basePath: `${user.id}/${product.id}` , images}
+
+    return await this.firebaseService.uploadFiles(uploadFilesDto);
 
   }
 

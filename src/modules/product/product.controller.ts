@@ -50,22 +50,27 @@ export class ProductController implements CrudController<ProductEntity> {
             format: 'binary',
           },
         },
-        product_dto:{
+        createProductDto:{
           type: 'object',
         }
       },
     },
   }) 
   @UseInterceptors(FilesInterceptor('images'))
+  /**
+   * TODO : set 'createProductDto' to 'CreateProductDto' or add data validation manually 
+   */
   async addProduct(@UploadedFiles() images: Array<Express.Multer.File>,
-                   @Body("product_dto") product_dto: CreateProductDto)
+                   @Body("product_dto") createProductDto: any)
   {
-    //return this.service.createOneBase(createProductDto , images);
     images.forEach(file => {
       console.log(file.originalname) 
     });
   
-    console.log(product_dto);
+    console.log(createProductDto);
+    
+    return this.service.createOneBase(createProductDto , images);
+     
   }
 }
 
