@@ -1,13 +1,14 @@
-import { UserEntity } from './../../../database/entities/user.entity';
-import { CreateUserDto } from './../../user/dtos/user/create-user.dto';
+import { UserEntity } from '../../../database/entities/user.entity';
+import { CreateUserDto } from '../../user/dtos/user/create-user.dto';
 import { getUserSample } from './samples/user.sample';
-import { UserSerializer } from './../../user/serializers/users.serializer';
-import { AuthService } from './../auth.service';
+import { UserSerializer } from '../../user/serializers/users.serializer';
+import { AuthService } from '../auth.service';
 import { AuthController } from "../auth.controller"
 import { Test } from '@nestjs/testing';
 
 
 jest.mock('../auth.service')
+
 
 describe('AuthController' , () => {
   let authController: AuthController;
@@ -34,13 +35,13 @@ describe('AuthController' , () => {
       user = response.user;
     })
 
-    test('the it should call authService' , () => {
+    /* test('the it should call authService' , () => {
       expect(authService.register).toBeCalledWith(createUserDto);
     })
-  /*
+  
     test('then it should return' , () => {
       expect(user).toEqual(getUserSample());
-    })*/
+    }) */
 
   })
 

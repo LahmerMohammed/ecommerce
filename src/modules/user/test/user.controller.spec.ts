@@ -1,17 +1,19 @@
-import { RolesGuard } from './../../../guards/role.guard';
+import { RolesGuard } from '../../../guards/role.guard';
 import { CanActivate } from '@nestjs/common';
-import { ProductModule } from './../../product/product.module';
-import { ProductService } from './../../product/product.service';
+import { ProductModule } from '../../product/product.module';
+import { ProductService } from '../../product/product.service';
 import { getProductStub } from './samples/user.sample';
-import { UserEntity } from './../../../database/entities/user.entity';
+import { UserEntity } from '../../../database/entities/user.entity';
 import { getUpdateWhistlistStub } from './samples/update-whishlist.stub';
-import { UserService } from './../user.service';
-import { UserController } from './../user.controller';
+import { UserService } from '../user.service';
+import { UserController } from '../user.controller';
 import { Test } from '@nestjs/testing';
 import { ACTION } from '../dtos/update-user-whishlist.dto';
 
 
 jest.mock('../user.service');
+
+
 
 describe('UserController' , () => {
 
@@ -46,13 +48,13 @@ describe('UserController' , () => {
       })
 
       
-      test('then it should call userService' , () => {
+      /* test('then it should call userService' , () => {
         expect(userService.updateUserWhistlist).toBeCalledWith(getUpdateWhistlistStub(ACTION.ADD))
       });
 
       test('and should return user with added product ' , () => {
         expect(user.whishlist).toContainEqual(getProductStub())
-      })
+      }) */
 
     })
     
