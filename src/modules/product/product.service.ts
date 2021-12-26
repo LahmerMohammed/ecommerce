@@ -1,3 +1,5 @@
+import { DeleteImageDto } from './dtos/delete-image.dto';
+import { NotImplementedException } from '@nestjs/common';
 /* import { FirebaseService } from './../firebase/firebase.service';
  */import { UserService } from './../user/user.service';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -33,13 +35,16 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
       throw new UnauthorizedException('user not found');
     }
     product.added_by = user;
-
-    await this.productRepo.save(product); 
+    
+    const saved_product = await this.productRepo.save(product); 
 
     const  uploadFilesDto  = {basePath: `${user.id}/${product.id}` , images}
 
-    return await this.firebaseService.uploadFiles(uploadFilesDto);
-
+    const response = {
+      product: saved_product,
+      filesUploading: await this.firebaseService.uploadFiles(uploadFilesDto)
+    }
+    return response;
   }
 
 
@@ -65,10 +70,27 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
 
   
 
-  async isOwner(product_id: string , user_id: string) : Promise<boolean>{
+  async isOwner(product_id: string , user_id: string) : Promise<boolean> {
     
     const product = await this.productRepo.findOne({id: product_id});
   
     return product.added_by_id == user_id;
+  }
+
+  async addImages(user_id: string , addImageDto: {product_id: string , images: Array<Express.Multer.File>}){
+    
+    const basePath = `${user_id}/${addImageDto.product_id}`;
+
+    const uploadFilesDto = {basePath , images: addImageDto.images}
+
+    return this.firebaseService.uploadFiles(uploadFilesDto);
+  }
+
+
+  async deleteImage(user_id: string , deleteImageDto: DeleteImageDto)
+  {
+    const imagePath = `${user_id}/${deleteImageDto.product_id}/${deleteImageDto.image_id}`;
+
+    return this.firebaseService.deleteFile(imagePath);
   }
 }
