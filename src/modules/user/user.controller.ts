@@ -17,6 +17,7 @@ import { Role } from 'src/database/entities/role.enum';
 import { RolesGuard } from 'src/guards/role.guard';
 import { UpdateUserWhishlistDto } from './dtos/update-user-whishlist.dto';
 import { throws } from 'assert';
+import { User } from 'src/decorators/user.decorator';
 
 @ApiTags('user')
 @Crud({
@@ -51,7 +52,7 @@ import { throws } from 'assert';
   },
   
 })
-@Roles(Role.ADMIN)
+//@Roles(Role.ADMIN)
 @UseGuards(JwtAuthGuard/**,RolesGuard */)
 @Controller('users')
 export class UserController implements CrudController<UserEntity> {
