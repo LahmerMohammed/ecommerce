@@ -4,7 +4,7 @@ import { RolesGuard } from './../../guards/role.guard';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { Crud, CrudController, Override } from '@nestjsx/crud';
-import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete, Put } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
@@ -80,7 +80,36 @@ export class ProductController implements CrudController<ProductEntity> {
   @Delete('/images')
   async deleteImage(@Body() crudImageDto: DeleteImageDto , @User("id") user_id: string )
   {
-    return this.service.deleteImage(user_id , crudImageDto);
+    return await this.service.deleteImage(user_id , crudImageDto);
+  }
+
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        images: {
+          type: 'array', // 👈  array of files
+          items: {
+            type: 'string',
+            format: 'binary',
+          },
+        },
+        product_id:{
+          type: 'uuid',
+        }
+      },
+    },
+  }) 
+  @UseInterceptors(FilesInterceptor('images'))
+  @Put('/images')
+  async addImage(@UploadedFiles() images: Array<Express.Multer.File>,
+                 @User("id") user_id: string,
+                 @Body("product_id") product_id: string)
+  {
+
+   const body = {product_id , images}
+   return await this.service.addImages(user_id , body ); 
   }
 }
 
