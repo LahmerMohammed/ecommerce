@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
  import { ref, getStorage } from 'firebase/storage';
 import { Bucket } from '@google-cloud/storage';
 import { Injectable } from '@nestjs/common';
@@ -55,14 +56,29 @@ export class FirebaseService{
 
   public async uploadFiles(uploadFilesDto: {basePath: string , images: Array<Express.Multer.File>}) {
 
-    uploadFilesDto.images.forEach((file) => {
+    uploadFilesDto.images.forEach(async (file) => {
 
-      this.uploadFile(file , `${uploadFilesDto.basePath}/${uuidv4()}`)
+      return await this.uploadFile(file , `${uploadFilesDto.basePath}/${uuidv4()}`)
     });
 
   }
 
   public async getFileByID(fileName: string) {}
+
+
+  async deleteFile(file_path: string)
+  {
+    let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
+
+    const file = bucket.file(file_path);
+
+    return file.delete( (err: Error , response ) => {
+      if( err )
+        throw new HttpException(err.message , HttpStatus.BAD_GATEWAY);
+      
+      return response;
+    })
+  }
 
 
 }
