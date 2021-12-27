@@ -7,33 +7,28 @@ import { IsEnum, IsInt, IsNotEmpty, isNotEmptyObject, IsPositive, IsString, IsUU
 import { IsNull } from "typeorm";
 
 
-@Expose()
+@Exclude()
 export class CreateProductDto extends BaseDto {
   
+  @Expose()
   @IsString()
   name: string;
 
+  @Expose()
   @IsString()
   description: string;
 
+  @Expose()
   @IsEnum(Category)
   category: Category;
 
-  
+  @Expose()
   @IsInt()
   @IsPositive()
   price: number;
 
+  @Expose()
   @IsInt()
   @IsPositive()
   quantity: number;
-
-  @Exclude()
-  added_by_user_id: string;
-
-  @Exclude()
-  reviews: ReviewEntity[];
-
-  @Exclude()
-  added_by: UserEntity;
 }
