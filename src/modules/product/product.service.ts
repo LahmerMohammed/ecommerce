@@ -1,5 +1,6 @@
+import { UpdateProductDto } from './dtos/update-product.dto';
 import { DeleteImageDto } from './dtos/delete-image.dto';
-import { NotImplementedException } from '@nestjs/common';
+import { NotImplementedException, NotFoundException } from '@nestjs/common';
 /* import { FirebaseService } from './../firebase/firebase.service';
  */import { UserService } from './../user/user.service';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -7,14 +8,16 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
+import { CrudRequest, Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
 import { plainToClass } from 'class-transformer';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import * as firebase from 'firebase-admin';
 import { FirebaseService } from '../firebase/firebase.service';
+import { DeleteProductDto } from './dtos/delete-product.dto';
 
 @Injectable()
 export class ProductService extends TypeOrmCrudService<ProductEntity> {
+  
   constructor(@InjectRepository(ProductEntity) private readonly productRepo : Repository<ProductEntity>,
               @Inject(forwardRef(() => UserService )) private readonly userService: UserService,
               private readonly firebaseService: FirebaseService, 
@@ -24,15 +27,15 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
 
 
   @Override('createOneBase')
-  async createOneBase(createProductDto: CreateProductDto,
+  async createOneBase(user_id: string , createProductDto: CreateProductDto,
                       images: Array<Express.Multer.File>) {
     
     var product = plainToClass(ProductEntity,createProductDto);
   
-    const user = await this.userService.findOne({id: createProductDto.added_by_user_id});
+    const user = await this.userService.findOne({id: user_id});
 
     if( !user ){
-      throw new UnauthorizedException('user not found');
+      throw new UnauthorizedException('User not found');
     }
     product.added_by = user;
     
@@ -49,24 +52,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
 
 
   @Override('createManyBase')
-  async createManyBase(createProductsDto: CreateProductDto[]) {
-
-    var products = plainToClass(ProductEntity,createProductsDto);
-
-
-    const user = await this.userService.findOne({id: createProductsDto[0]!.added_by_user_id});
-
-    if( !user ){
-      throw new UnauthorizedException('user not found');
-    }
-
-    products.forEach(product => {
-      product.added_by = user;
-    });
-
-    return await this.productRepo.save(products);
-
-  }
+  async createManyBase(createProductsDto: CreateProductDto[]) {}
 
   
 
@@ -92,5 +78,23 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     const imagePath = `${user_id}/${deleteImageDto.product_id}/${deleteImageDto.image_id}`;
 
     return this.firebaseService.deleteFile(imagePath);
+  }
+
+  @Override('updateOneBase')
+  async updateOneBase(updateProductDto: UpdateProductDto){
+    
+    const product_counter = await this.repo.count({id: updateProductDto.product_id}); 
+
+    if( product_counter != 1){
+      throw new NotFoundException(`Product with id = ${updateProductDto.product_id} not found`);
+    }
+    
+    return await this.repo.save({...updateProductDto});
+    
+  }
+
+  @Override('updateOneBase')
+  async deleteOneBase(product_id: string) {
+    return await this.repo.delete({id: product_id});
   }
 }
