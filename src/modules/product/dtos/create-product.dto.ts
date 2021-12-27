@@ -17,7 +17,7 @@ export class CreateProductDto extends BaseDto {
   description: string;
 
   @IsEnum(Category)
-  Category: Category;
+  category: Category;
 
   
   @IsInt()
@@ -28,7 +28,6 @@ export class CreateProductDto extends BaseDto {
   @IsPositive()
   quantity: number;
 
-  /** should be excluded also , extract it from jwt */
   @Exclude()
   added_by_user_id: string;
 
