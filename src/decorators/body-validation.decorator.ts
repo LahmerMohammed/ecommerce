@@ -4,7 +4,7 @@ import { BadRequestException, createParamDecorator, ExecutionContext } from "@ne
 
 
 
-export const BadyValidation = createParamDecorator(
+export const BodyValidation = createParamDecorator(
   async (Dto: any , ctx: ExecutionContext) => {
     
     const body = ctx.switchToHttp().getRequest().body;
