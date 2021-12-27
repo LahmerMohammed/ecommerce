@@ -17,13 +17,14 @@ export class ProductGuard implements CanActivate {
       context.getClass(),
     ]);
     
-
     const { user } = context.switchToHttp().getRequest();
-    const  updateProductDto : UpdateProductDto = context.switchToHttp().getRequest().body;
-    
-    const isOwner = await this.productService.isOwner(user.id,updateProductDto.id);
 
-    return requiredRoles.some(role => user.roles.includes(role)) || isOwner; 
+    const  product_id   = context.switchToHttp().getRequest().params.id;
 
+    const isOwner = await this.productService.isOwner(user.id,product_id);
+
+    /* return requiredRoles.some(role => user.roles.includes(role)) || isOwner; */ 
+
+    return isOwner;
   }
 }
