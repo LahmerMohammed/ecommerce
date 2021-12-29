@@ -37,7 +37,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     if( !user ){
       throw new UnauthorizedException('User not found');
     }
-    product.added_by = user;
+    product.created_by = user;
     
     const saved_product = await this.productRepo.save(product); 
 
@@ -60,7 +60,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     
     const product = await this.productRepo.findOne({id: product_id});
   
-    return product.added_by_id == user_id;
+    return product.created_by_id == user_id;
   }
 
   async addImages(user_id: string , addImageDto: {product_id: string , images: Array<Express.Multer.File>}){

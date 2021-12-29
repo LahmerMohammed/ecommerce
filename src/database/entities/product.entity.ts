@@ -28,11 +28,11 @@ export class ProductEntity extends BaseEntity {
 
 
   @ManyToOne(type => UserEntity , user => user.added_products )
-  @JoinColumn({name:'added_by_id'})
-  added_by: UserEntity;
+  @JoinColumn({name:'created_by_id'})
+  created_by: UserEntity;
 
-  @Column({type: 'uuid',name:'added_by_id'})
-  added_by_id: string;
+  @Column({type: 'uuid',name:'created_by_id'})
+  created_by_id: string;
  
   @Column({
     type: 'enum',
