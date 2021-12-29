@@ -27,28 +27,5 @@ export class UserSerializer {
   @Expose()
   roles: Role[];
 
-  /*
-  @Exclude()
-  created_at: Date;
-  
-  @Exclude()
-  updated_at: Date;
-
-
-  @Exclude()
-  isEmailConfirmed: boolean;
-
-  @Exclude()
-  whishlist: ProductEntity[];
-
-  @Exclude()
-  password: string;
-
-  @Exclude()
-  added_products: ProductEntity[];
-
-  @Exclude()
-  reviews: ReviewEntity[];*/
-
 
 }
