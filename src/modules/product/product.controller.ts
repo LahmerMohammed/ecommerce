@@ -5,8 +5,8 @@ import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import { RolesGuard } from './../../guards/role.guard';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { Crud, CrudController, Override } from '@nestjsx/crud';
-import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete, Put, BadRequestException, Param } from '@nestjs/common';
+import { Crud, CrudController, Override, CrudRequest } from '@nestjsx/crud';
+import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete, Put, BadRequestException, Param, Get } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
@@ -127,5 +127,13 @@ export class ProductController implements CrudController<ProductEntity> {
    const body = { product_id , images};
    return await this.service.addImages(user_id , body ); 
   }
+
+  @Get('/details')
+  async getProductDetails(@Body() req: CrudRequest)
+  {
+    return await this.service.getMany(req);
+  }
+
+
 }
 
