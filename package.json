@@ -12,7 +12,7 @@
     "start": "nest start --passWithNoTestst",
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "NODE_ENV=production; node dist/main ",
+    "start:prod": "cp src/ecommerce-file-storage-c603e-firebase-adminsdk-bctqi-1f5a3cbf24.json ./dist/;NODE_ENV=production; node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "NODE_ENV=test jest",
     "test:watch": "jest --watch",
