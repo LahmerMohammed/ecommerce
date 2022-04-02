@@ -1,3 +1,7 @@
+
+- Username : test
+- Password : test
+
 # Functionalities ( not implmented yet ! ) :
 - implement dtos
 - implement serializers
