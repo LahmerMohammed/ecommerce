@@ -6,6 +6,7 @@ import { Exclude, Expose, Type } from "class-transformer";
 import { ArrayMaxSize, ArrayMinSize, isArray, IsEnum, IsInt, IsNotEmpty, isNotEmptyObject, IsPositive, IsString, IsUUID, Validate, ValidateNested } from "class-validator";
 import { IsNull } from "typeorm";
 
+//test
 
 @Exclude()
 export class CreateProductDto extends BaseDto {
