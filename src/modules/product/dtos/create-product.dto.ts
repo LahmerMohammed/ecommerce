@@ -2,8 +2,8 @@ import { Category } from './../../../database/entities/category.enum';
 import { BaseDto } from './../../../database/entities/base.dto';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { ReviewEntity } from './../../../database/entities/review.entity';
-import { Exclude, Expose } from "class-transformer";
-import { IsEnum, IsInt, IsNotEmpty, isNotEmptyObject, IsPositive, IsString, IsUUID } from "class-validator";
+import { Exclude, Expose, Type } from "class-transformer";
+import { ArrayMaxSize, ArrayMinSize, isArray, IsEnum, IsInt, IsNotEmpty, isNotEmptyObject, IsPositive, IsString, IsUUID, Validate, ValidateNested } from "class-validator";
 import { IsNull } from "typeorm";
 
 
@@ -25,10 +25,21 @@ export class CreateProductDto extends BaseDto {
   @Expose()
   @IsInt()
   @IsPositive()
-  price: number;
+  regular_price: number;
 
   @Expose()
   @IsInt()
   @IsPositive()
-  quantity: number;
+  sale_price: number;
+
+  @Expose()
+  @IsInt()
+  @IsPositive()
+  stock: number;
+
+  @Expose()
+  @ArrayMinSize(0)
+  @ArrayMaxSize(10)
+  @ValidateNested({})
+  tags: string[];
 }
