@@ -19,7 +19,7 @@ import { User } from 'src/decorators/user.decorator';
 import { isUUID, IsUUID, validate, validateOrReject, ValidationError, Length } from 'class-validator';
 import { BodyValidation } from 'src/decorators/body-validation.decorator';
 import { DeleteProductDto } from './dtos/delete-product.dto';
-import { ParseFormDataJsonPipe } from 'src/pipes/ParseFormDataJsonPipe';
+
 
 
 @ApiTags('products')
