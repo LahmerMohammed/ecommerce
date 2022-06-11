@@ -6,7 +6,7 @@ import { RolesGuard } from './../../guards/role.guard';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { Crud, CrudController, Override, CrudRequest } from '@nestjsx/crud';
-import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete, Put, BadRequestException, Param, Get } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete, Put, BadRequestException, Param, Get, ValidationPipe, UsePipes } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
@@ -19,6 +19,7 @@ import { User } from 'src/decorators/user.decorator';
 import { isUUID, IsUUID, validate, validateOrReject, ValidationError, Length } from 'class-validator';
 import { BodyValidation } from 'src/decorators/body-validation.decorator';
 import { DeleteProductDto } from './dtos/delete-product.dto';
+import { ParseFormDataJsonPipe } from 'src/pipes/ParseFormDataJsonPipe';
 
 
 @ApiTags('products')
@@ -66,7 +67,7 @@ export class ProductController implements CrudController<ProductEntity> {
             format: 'binary',
           },
         },
-        createProductDto:{
+        body:{
           type: 'object',
           
         }
@@ -78,13 +79,12 @@ export class ProductController implements CrudController<ProductEntity> {
                    @BodyValidation(CreateProductDto) createProductDto: CreateProductDto,
                    @User("id") user_id: string)
   {
-
     images.forEach(file => {
       console.log(file.originalname) 
     });
     console.log(createProductDto); 
     
-    return this.service.createOneBase(user_id, createProductDto , images);
+    //return this.service.createOneBase(user_id, createProductDto , images);
   }
 
  
