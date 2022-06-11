@@ -41,6 +41,5 @@ export class CreateProductDto extends BaseDto {
   @Expose()
   @ArrayMinSize(0)
   @ArrayMaxSize(10)
-  @ValidateNested({})
   tags: string[];
 }

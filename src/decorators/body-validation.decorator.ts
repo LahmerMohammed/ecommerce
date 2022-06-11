@@ -1,3 +1,4 @@
+import { deepParseJson } from 'deep-parse-json';
 import {  validate, validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { BadRequestException, createParamDecorator, ExecutionContext } from "@nestjs/common";
@@ -6,17 +7,14 @@ import { BadRequestException, createParamDecorator, ExecutionContext } from "@ne
 
 export const BodyValidation = createParamDecorator(
   async (Dto: any , ctx: ExecutionContext) => {
+
+    // parse formData
+    let body = deepParseJson(ctx.switchToHttp().getRequest().body);
+
+    body = body.body || body;    
+
+    const dto = plainToClass(Dto,body);
     
-    const body = ctx.switchToHttp().getRequest().body;
-
-
-    const dto = plainToClass(Dto , body);
-   
-  
-    /* validate(dto).then(errors => {
-      
-      }) */
-
     try{
       await validateOrReject(dto);
 
