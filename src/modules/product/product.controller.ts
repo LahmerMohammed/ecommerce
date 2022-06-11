@@ -84,7 +84,7 @@ export class ProductController implements CrudController<ProductEntity> {
     });
     console.log(createProductDto); 
     
-    return this.service.createOneBase(user_id, createProductDto , images);
+    //return this.service.createOneBase(user_id, createProductDto , images);
   }
 
  
