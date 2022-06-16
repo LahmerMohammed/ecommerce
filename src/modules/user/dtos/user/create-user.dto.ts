@@ -1,7 +1,10 @@
 import { Role } from "src/database/entities/role.enum";
-import { IsAlpha, IsAlphanumeric, IsBIC, IsISO31661Alpha2, IsDataURI, IsDate, IsEmail, IsEnum, IsLowercase, IsObject, IsPostalCode, IsString, Length, Min, ValidateNested, IsDateString, IsArray, isPhoneNumber, IsPhoneNumber } from 'class-validator';
-import { Exclude, Expose } from "class-transformer";
+import { IsEmail, IsEnum,IsString, Length, IsDateString, IsArray, IsPhoneNumber,
+         ArrayMinSize, ArrayMaxSize, IsOptional, IsDate } from 'class-validator';
+import { Exclude, Expose, Type } from "class-transformer";
 
+
+// TODO : add values 'role'  field can have
 
 @Exclude()
 export class CreateUserDto {
@@ -19,6 +22,24 @@ export class CreateUserDto {
   @Expose()
   @IsEmail()
   email: string;
+
+
+  @Expose()
+  @IsArray()
+  @ArrayMaxSize(2)
+  @ArrayMinSize(0)
+  @IsEnum(Role,{each: true})
+  role: Role[];
+
+  /* @Expose()
+  @IsOptional()
+  @IsDate()
+  birthdate: string;
+
+  @Expose()
+  @IsOptional()
+  @IsPhoneNumber()
+  phonenumber: string; */
 
 }
 

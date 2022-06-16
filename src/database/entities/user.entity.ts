@@ -28,14 +28,13 @@ export class UserEntity extends BaseEntity{
   @Column({unique:true})
   email: string;
 
-  @Column({
-    type: 'enum',
+  @Column('enum',{
     enum: Role,
     array:true,
     default: [Role.USER],
     name:'role',
   })
-  roles: Role[];
+  role: Role[];
 
 
   @Column({name: 'is_email_confirmed',default:false})
