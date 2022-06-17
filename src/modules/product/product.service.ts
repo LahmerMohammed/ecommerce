@@ -14,6 +14,7 @@ import { DeepPartial, Repository } from 'typeorm';
 import * as firebase from 'firebase-admin';
 import { FirebaseService } from '../firebase/firebase.service';
 import { DeleteProductDto } from './dtos/delete-product.dto';
+//import { FilterOperator, paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
 export class ProductService extends TypeOrmCrudService<ProductEntity> {
@@ -32,7 +33,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     
     var product = plainToClass(ProductEntity,createProductDto);
   
-    const user = await this.userService.findOne({id: user_id});
+    const user = await this.userService.findOne({where: {id: user_id}});
 
     if( !user ){
       throw new UnauthorizedException('User not found');
@@ -58,7 +59,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
 
   async isOwner(product_id: string , user_id: string) : Promise<boolean> {
     
-    const product = await this.productRepo.findOne({id: product_id});
+    const product = await this.productRepo.findOne({where: {id: product_id}});
   
     return product.created_by_id == user_id;
   }
@@ -86,7 +87,7 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
   @Override('updateOneBase')
   async updateOneBase(updateProductDto: UpdateProductDto){
     
-    const product_counter = await this.repo.count({id: updateProductDto.product_id}); 
+    const product_counter = await this.repo.count({where: {id: updateProductDto.product_id}}); 
 
     if( product_counter != 1){
       throw new NotFoundException(`Product with id = ${updateProductDto.product_id} not found`);
@@ -100,4 +101,19 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
   async deleteOneBase(product_id: string) {
     return await this.repo.delete({id: product_id});
   }
+/* 
+  findAll(query: PaginateQuery):  Promise<Paginated<ProductEntity>>{
+    return paginate(query,this.productRepo,{
+      sortableColumns: ['id', 'sale_price','regular_price','stock'],
+      searchableColumns: ['name', 'tags', 'category'],
+      defaultSortBy: [['id', 'DESC']],
+      filterableColumns: {
+        regular_price: [FilterOperator.GTE,FilterOperator.LTE],
+        sale_price: [FilterOperator.GTE,FilterOperator.LTE],
+        stock: [FilterOperator.GTE,FilterOperator.LTE],
+      },
+    })
+  } */
+
+  
 }

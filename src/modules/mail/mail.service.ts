@@ -43,7 +43,7 @@ export class MailService {
     
     const email = await this.decodeConfirmationToken(token);
 
-    const user = await this.userService.findOne({email: email});
+    const user = await this.userService.findOne({ where: {email: email}});
     
     if( user.isEmailConfirmed){
       throw new BadRequestException('Email already confirmed');
@@ -76,7 +76,7 @@ export class MailService {
   }
 
   async resendEmailConfirmation(email: string) {
-    const user = await this.userService.findOne({email: email});
+    const user = await this.userService.findOne({where: {email: email}});
     
     if( user.isEmailConfirmed ){
       throw new BadRequestException('email already confirmed');

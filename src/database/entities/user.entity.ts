@@ -1,11 +1,10 @@
 import { ReviewEntity } from './review.entity';
-import { AfterLoad, BeforeInsert, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
-import * as bcrypt from 'bcrypt';
+import { AfterLoad, BeforeInsert, Column, Entity, JoinColumn,
+   JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { BaseEntity } from "./BaseEntity";
 import { ProductEntity } from "./product.entity";
 import { AddressEntity } from "./address.entity";
 import { Role } from './role.enum';
-import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
 
 
 

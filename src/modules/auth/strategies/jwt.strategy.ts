@@ -26,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy,'jwt') {
    
     const user_id = payload.sub;
     
-    const user = this.userService.findOne({id: user_id});
+    const user = this.userService.findOne({where: {id: user_id}});
 
     return plainToClass(UserSerializer,user);
 

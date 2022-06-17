@@ -1,23 +1,20 @@
 import "reflect-metadata";
-import { ConnectionOptions, createConnection } from "typeorm";
+import { DataSourceOptions, createConnection } from "typeorm";
 
 
-const baseOptions: ConnectionOptions = {
+const baseOptions:  DataSourceOptions = {
   type: "postgres",
   port: 5432,
   entities: ["dist/**/**.entity.js"],
   synchronize: false,
   ssl: { rejectUnauthorized: false },
   migrations: ["dist/database/migration/*.js"],
-  cli: {
-    migrationsDir: "src/database/migration",
-  },
-  migrationsTableName: "migrations"
+  migrationsTableName: "migrations",
 };
 
 
 function getOptions() {
-  let connectionOptions: ConnectionOptions;
+  let connectionOptions: DataSourceOptions;
 
   connectionOptions = baseOptions;
 

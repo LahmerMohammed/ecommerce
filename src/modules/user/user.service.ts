@@ -54,13 +54,13 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
   async updateUserWhistlist(updateUserWhistlist: UpdateUserWhishlistDto) : Promise<UserEntity>{
     const user = await this.userRepo.findOne({
-      id: updateUserWhistlist.user_id
+      where: {id: updateUserWhistlist.user_id}
     });
     if( !user) {
       throw new NotFoundException('Invalid user');
     }
     const product = await this.productService.findOne({
-      id: updateUserWhistlist.product_id
+      where: {id: updateUserWhistlist.product_id}
     })
     if( !product){
      throw new NotFoundException('Invalid product');
@@ -86,7 +86,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
     
   
   async getUserByEmail(email: string) : Promise<UserEntity> {
-    const user = await this.userRepo.findOne({email: email});
+    const user = await this.userRepo.findOne({where: {email: email}});
     
     return user;
   }
@@ -113,7 +113,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
   async isTokenBlacklisted(token: string) {
 
-    const tokenBlacklist = await this.tokenRepo.findOne({token: token});
+    const tokenBlacklist = await this.tokenRepo.findOne({where: {token: token}});
 
     return !(tokenBlacklist === undefined);
   }
@@ -148,7 +148,7 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
   async updateUserAddress(user_id: string , newAddress: UpdateAddressDto){
 
-    const oldAddress = await this.addressRepo.findOne({id: newAddress.id });
+    const oldAddress = await this.addressRepo.findOne({where: {id: newAddress.id }});
 
     if( !oldAddress ) {
       throw new NotFoundException();
@@ -167,12 +167,12 @@ export class UserService extends TypeOrmCrudService<UserEntity> {
 
 
   async getAddresses(user_id: string) {
-    return await this.addressRepo.find({user: {id: user_id} });
+    return await this.addressRepo.find({where: {user: {id: user_id} }});
   }
 
   async deleteAddress(user_id: string , address_id: string) {
     
-    const address = await  this.addressRepo.findOne({id: address_id});
+    const address = await  this.addressRepo.findOne({where: {id: address_id}});
 
     if( !address ) {
       throw new NotFoundException();
