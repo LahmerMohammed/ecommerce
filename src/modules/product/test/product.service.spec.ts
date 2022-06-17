@@ -1,6 +1,6 @@
 import { ProductController } from './../product.controller';
 import { ProductEntity } from './../../../database/entities/product.entity';
-import { getRepository, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 import { ProductService } from './../product.service';
 import { Test,TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';

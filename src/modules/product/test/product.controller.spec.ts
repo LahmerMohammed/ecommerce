@@ -8,7 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { UserModule } from 'src/modules/user/user.module';
 import { forwardRef } from '@nestjs/common';
-import { FirebaseModule } from 'nestjs-firebase';
 
 jest.mock('../product.service')
 
