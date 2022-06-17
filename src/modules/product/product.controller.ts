@@ -23,7 +23,7 @@ import { DeleteProductDto } from './dtos/delete-product.dto';
 
 
 @ApiTags('products')
-//@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @Crud({
   model: {
     type: ProductEntity,
@@ -78,14 +78,11 @@ export class ProductController implements CrudController<ProductEntity> {
   async addProduct(@UploadedFiles() images: Array<Express.Multer.File>,
                    @BodyValidation(CreateProductDto) createProductDto: CreateProductDto,
                    @User("id") user_id: string)
-  {
-    images.forEach(file => {
-      console.log(file.originalname) 
-    });
-    console.log(createProductDto); 
-    
-    return this.service.createOneBase(user_id, createProductDto , images);
+  {    
+    return await this.service.createOneBase(user_id, createProductDto , images);
   }
+
+  
 
  
 
@@ -115,10 +112,10 @@ export class ProductController implements CrudController<ProductEntity> {
     },
   }) 
   @UseInterceptors(FilesInterceptor('images'))
-  @Put('/images')
+  @Put('/:product_id/images')
   async addImage(@UploadedFiles() images: Array<Express.Multer.File>,
                  @User("id")  user_id: string,
-                 @Body("product_id") product_id: string)
+                 @Param('product_id') product_id: string)
   {
    if( !isUUID(product_id) ){
      throw new BadRequestException('product_id must be valid uuid');

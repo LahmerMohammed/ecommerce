@@ -1,5 +1,4 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
- import { ref, getStorage } from 'firebase/storage';
 import { Bucket } from '@google-cloud/storage';
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,44 +20,36 @@ export class FirebaseService{
   }
 
   public async uploadFile(file: Express.Multer.File , filePath: string) {
+    let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
 
     
-    return new Promise((resolve , reject) => {
+    let fileUpload = bucket.file(filePath);
 
-      let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
-
-
-      let fileUpload = bucket.file(filePath);
-
-      const blobStream = fileUpload.createWriteStream({
+    const blobStream = fileUpload.createWriteStream({
         metadata:{
-          contentType: file.mimetype,
-          
+          contentType: 'image/jpg',
         }
       });
       
-      blobStream.on('error', (error) => {
-        reject('Something is wrong! Unable to upload at the moment.');
-      });
+    blobStream.on('error', (error) => {
+      console.error('Something is wrong! Unable to upload at the moment.');
+      console.error(error);
+    });
   
-      blobStream.on('finish', () => {
-        // The public URL can be used to directly access the file via HTTP.
-        const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
-        resolve(url);
-      });
+    blobStream.on('finish', () => {
+      // The public URL can be used to directly access the file via HTTP.
+      const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
+      console.info(url);
+    });
   
-      blobStream.end(file.buffer);
-    })
-
-    
-
+    blobStream.end(file.buffer);
   }
 
   public async uploadFiles(uploadFilesDto: {basePath: string , images: Array<Express.Multer.File>}) {
 
     uploadFilesDto.images.forEach(async (file) => {
 
-      return await this.uploadFile(file , `${uploadFilesDto.basePath}/${uuidv4()}`)
+      await this.uploadFile(file , `${uploadFilesDto.basePath}/${uuidv4()}.jpg`)
     });
 
   }

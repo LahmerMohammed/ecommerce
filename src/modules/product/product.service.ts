@@ -68,8 +68,11 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
     const basePath = `${user_id}/${addImageDto.product_id}`;
 
     const uploadFilesDto = {basePath , images: addImageDto.images}
-
-    return this.firebaseService.uploadFiles(uploadFilesDto);
+    try{
+      return await this.firebaseService.uploadFiles(uploadFilesDto);
+    }catch(error){
+      console.log(error);
+    }
   }
 
 
