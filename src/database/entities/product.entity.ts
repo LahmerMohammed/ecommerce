@@ -1,7 +1,7 @@
 import { Category } from './category.enum';
 
 import { BaseEntity } from "./BaseEntity";
-import { OneToMany , Column, Entity, ManyToOne, JoinColumn } from "typeorm";
+import { OneToMany , Column, Entity, ManyToOne, JoinColumn, AfterLoad } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { ReviewEntity } from "./review.entity";
 
@@ -43,5 +43,23 @@ export class ProductEntity extends BaseEntity {
   
   @Column("varchar",{array: true})
   tags: string[];
+
+
+  rating: { rate:number , count: number};
+
+  @AfterLoad()   
+  setRating() {
+    const count = this.reviews.length;
+    
+    if( count == 0)
+      return;
+    
+    const rate = this.reviews.reduce( (acc_rate , r) => acc_rate + r.rate,0) / count;
+
+    this.rating = {
+      rate: rate,
+      count: count,
+    }
+  }
 
 }
