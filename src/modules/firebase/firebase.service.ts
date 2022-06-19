@@ -21,7 +21,7 @@ export class FirebaseService{
     let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
 
     
-    let fileUpload = this.bucket.file(filePath);
+    let fileUpload = bucket.file(filePath);
 
     const blobStream = fileUpload.createWriteStream({
         metadata:{
