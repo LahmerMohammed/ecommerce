@@ -5,7 +5,7 @@ import { JwtAuthGuard } from './../auth/guards/jwt.guard';
 import { RolesGuard } from './../../guards/role.guard';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { Crud, CrudController, Override, CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
+import { Crud, CrudController, Override, CrudRequest, GetManyDefaultResponse, ParsedRequest } from '@nestjsx/crud';
 import { Controller, Post, UseGuards, Body, UseInterceptors, UploadedFiles, UploadedFile, Req, Delete, Put, BadRequestException, Param, Get, ValidationPipe, UsePipes } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductEntity } from 'src/database/entities/product.entity';
@@ -19,7 +19,7 @@ import { User } from 'src/decorators/user.decorator';
 import { isUUID, IsUUID, validate, validateOrReject, ValidationError, Length } from 'class-validator';
 import { BodyValidation } from 'src/decorators/body-validation.decorator';
 import { DeleteProductDto } from './dtos/delete-product.dto';
-//import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { UserProductSerializer } from './serializers/user-product.serializer';
 
 
 
@@ -34,6 +34,10 @@ import { DeleteProductDto } from './dtos/delete-product.dto';
     create: CreateProductDto,
     update: UpdateProductDto,
   },
+  serialize:{
+    get: UserProductSerializer
+  }
+  ,
   routes: {
     updateOneBase: {
       decorators: [UseGuards(ProductGuard)]
@@ -132,9 +136,12 @@ export class ProductController implements CrudController<ProductEntity> {
     return await this.service.getMany(req);
   }
 
-  /* @Get('/')
-  async findAll(@Paginate() query: PaginateQuery):  Promise<Paginated<ProductEntity>> {
-   return await this.service.findAll(query)   
-  } */
+  @Get('/')
+  @Override('getManyBase')
+  async findAllProduct(@ParsedRequest() req: CrudRequest)
+  {
+    const response = await this.service.findAll(req);
+    return response;
+  }
 }
 

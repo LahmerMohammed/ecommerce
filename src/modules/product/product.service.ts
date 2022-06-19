@@ -8,17 +8,17 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ProductEntity } from 'src/database/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CrudRequest, Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
+import { CrudRequest, GetManyDefaultResponse, Override, ParsedBody, ParsedRequest } from '@nestjsx/crud';
 import { plainToClass } from 'class-transformer';
 import { DeepPartial, Repository } from 'typeorm';
 import * as firebase from 'firebase-admin';
 import { FirebaseService } from '../firebase/firebase.service';
 import { DeleteProductDto } from './dtos/delete-product.dto';
+import { UserProductSerializer } from './serializers/user-product.serializer';
 //import { FilterOperator, paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
-export class ProductService extends TypeOrmCrudService<ProductEntity> {
-  
+export class ProductService extends TypeOrmCrudService<ProductEntity> {  
   constructor(@InjectRepository(ProductEntity) private readonly productRepo : Repository<ProductEntity>,
               @Inject(forwardRef(() => UserService )) private readonly userService: UserService,
               private readonly firebaseService: FirebaseService, 
@@ -101,19 +101,45 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
   async deleteOneBase(product_id: string) {
     return await this.repo.delete({id: product_id});
   }
-/* 
-  findAll(query: PaginateQuery):  Promise<Paginated<ProductEntity>>{
-    return paginate(query,this.productRepo,{
-      sortableColumns: ['id', 'sale_price','regular_price','stock'],
-      searchableColumns: ['name', 'tags', 'category'],
-      defaultSortBy: [['id', 'DESC']],
-      filterableColumns: {
-        regular_price: [FilterOperator.GTE,FilterOperator.LTE],
-        sale_price: [FilterOperator.GTE,FilterOperator.LTE],
-        stock: [FilterOperator.GTE,FilterOperator.LTE],
-      },
-    })
-  } */
+  
+  @Override('getManyBase')
+  async findAll(req: CrudRequest){
+
+    
+    let data : ProductEntity[];
+    let rest: any = {};
+
+    console.log(req);
+    if( req.parsed.limit === undefined )
+    {
+      data = <ProductEntity[]>(await this.getMany(req));
+      
+    }else{
+      const result =  (<GetManyDefaultResponse<ProductEntity>>(await this.getMany(req)));    
+      data = result.data;
+
+      Object.keys(result).forEach((key) => {
+        if( result[key] !== "data") 
+          rest[key] = result[key];
+      });
+    }
+    
+    //const {data , ...rest} = <GetManyDefaultResponse<ProductEntity>>(await this.getMany(req));    
+
+    const products = await Promise.all(data.map( async(product) => {
+      
+      const image = await this.firebaseService.dowbloadFile(product.created_by_id,product.id);
+      const product_serializer = new UserProductSerializer({...product});
+      
+      const result = {image,...product_serializer}
+      
+      return result;
+    }));
+
+    const response = { data: products, ...rest};
+
+    return response;
+  }
 
   
 }
