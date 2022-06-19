@@ -55,7 +55,7 @@ export class FirebaseService{
    * 
    * download only one image of a product (the main one) to show in search page 
    */
-  public async dowbloadFile(user_id: string , product_id: string) : Promise<StreamableFile> {
+  public async downloadFile(user_id: string , product_id: string) : Promise<Buffer> {
     
     const dir = `${user_id}/${product_id}`
     let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
@@ -68,9 +68,9 @@ export class FirebaseService{
     const file_name = files[0][0].name;
 
     const respoonse = await bucket.file(`${file_name}`).download();
-    const buffer = respoonse[0];
 
-    return new StreamableFile(buffer); 
+
+    return respoonse[0];
   }
 
 
