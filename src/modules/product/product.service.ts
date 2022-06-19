@@ -15,7 +15,6 @@ import * as firebase from 'firebase-admin';
 import { FirebaseService } from '../firebase/firebase.service';
 import { DeleteProductDto } from './dtos/delete-product.dto';
 import { UserProductSerializer } from './serializers/user-product.serializer';
-//import { FilterOperator, paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
 export class ProductService extends TypeOrmCrudService<ProductEntity> {  
@@ -105,33 +104,30 @@ export class ProductService extends TypeOrmCrudService<ProductEntity> {
   @Override('getManyBase')
   async findAll(req: CrudRequest){
 
+    const result =  await this.getMany(req);
     
     let data : ProductEntity[];
     let rest: any = {};
 
-    console.log(req);
-    if( req.parsed.limit === undefined )
+    if( 'data' in result)
     {
-      data = <ProductEntity[]>(await this.getMany(req));
-      
-    }else{
-      const result =  (<GetManyDefaultResponse<ProductEntity>>(await this.getMany(req)));    
       data = result.data;
 
       Object.keys(result).forEach((key) => {
-        if( result[key] !== "data") 
+        if( key !== "data") 
           rest[key] = result[key];
       });
+      
+    }else{
+      data =  result;
     }
     
-    //const {data , ...rest} = <GetManyDefaultResponse<ProductEntity>>(await this.getMany(req));    
-
     const products = await Promise.all(data.map( async(product) => {
       
-      const image = await this.firebaseService.dowbloadFile(product.created_by_id,product.id);
+      const image = await this.firebaseService.downloadFile(product.created_by_id,product.id);
       const product_serializer = new UserProductSerializer({...product});
       
-      const result = {image,...product_serializer}
+      const result = {image ,...product_serializer}
       
       return result;
     }));
