@@ -49,10 +49,11 @@ export class ProductEntity extends BaseEntity {
 
   @AfterLoad()   
   setRating() {
+
+    if( this.reviews === undefined || !this.reviews.length)
+     return;
+
     const count = this.reviews.length;
-    
-    if( count == 0)
-      return;
     
     const rate = this.reviews.reduce( (acc_rate , r) => acc_rate + r.rate,0) / count;
 
