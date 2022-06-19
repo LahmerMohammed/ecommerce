@@ -1,8 +1,7 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
-import { Bucket } from '@google-cloud/storage';
+import { HttpException, HttpStatus, StreamableFile } from '@nestjs/common';
+import { Bucket  } from '@google-cloud/storage';
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-
 import * as admin from 'firebase-admin';
 import { format } from 'prettier';
 
@@ -15,7 +14,6 @@ export class FirebaseService{
 
   public constructor()
   {
- 
     //this.bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
   }
 
@@ -23,7 +21,7 @@ export class FirebaseService{
     let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
 
     
-    let fileUpload = bucket.file(filePath);
+    let fileUpload = this.bucket.file(filePath);
 
     const blobStream = fileUpload.createWriteStream({
         metadata:{
@@ -53,8 +51,27 @@ export class FirebaseService{
     });
 
   }
+  /**
+   * 
+   * download only one image of a product (the main one) to show in search page 
+   */
+  public async dowbloadFile(user_id: string , product_id: string) : Promise<StreamableFile> {
+    
+    const dir = `${user_id}/${product_id}`
+    let bucket = admin.storage().bucket("gs://ecommerce-file-storage-c603e.appspot.com");
+    
+    const files = await bucket.getFiles({
+      autoPaginate: false,
+      prefix: dir
+    });
 
-  public async getFileByID(fileName: string) {}
+    const file_name = files[0][0].name;
+
+    const respoonse = await bucket.file(`${file_name}`).download();
+    const buffer = respoonse[0];
+
+    return new StreamableFile(buffer); 
+  }
 
 
   async deleteFile(file_path: string)
